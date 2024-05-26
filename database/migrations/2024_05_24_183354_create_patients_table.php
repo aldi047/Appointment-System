@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_ktp', 16);
             $table->string('no_hp', 15);
             $table->string('no_rm', 25);
+            $table->string('password')->default(bcrypt('password'));
             $table->timestamps();
         });
     }

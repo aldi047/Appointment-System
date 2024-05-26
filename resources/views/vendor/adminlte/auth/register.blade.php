@@ -90,25 +90,6 @@
             @enderror
         </div>
 
-        {{-- No RM --}}
-        <div class="input-group mb-3">
-            <input type="text" name="no_rm"
-                   class="form-control @error('no_rm') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.no_rm') }}">
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-book {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-
-            @error('no_rm')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
         {{-- Register button --}}
         <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
             <span class="fas fa-user-plus"></span>
