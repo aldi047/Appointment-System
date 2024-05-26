@@ -296,12 +296,15 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type' => 'navbar-search',
-            'text' => 'search',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
         [
-            'type' => 'fullscreen-widget',
+            'type' => 'navbar-notification',
+            'id' => 'logout_button',
+            'icon' => 'fa fa-power-off ',
+            'icon_color' => 'red',
+            'url' => 'logout',
             'topnav_right' => true,
         ],
 
