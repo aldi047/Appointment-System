@@ -2,9 +2,13 @@
 
 return [
 
-    'full_name' => 'Full name',
+    'full_name' => 'Nama Lengkap',
     'email' => 'Email',
-    'name' => 'Name',
+    'name' => 'Nama',
+    'address' => 'Alamat',
+    'no_ktp' => 'No KTP',
+    'no_hp' => 'No HP',
+    'no_rm' => 'No Rekam Medis',
     'password' => 'Password',
     'retype_password' => 'Retype password',
     'remember_me' => 'Remember Me',
