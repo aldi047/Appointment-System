@@ -19,7 +19,7 @@
                     data-accordion="false"
                 @endif>
 
-                @if (Auth::guard('doctor')->check())
+                @if (Auth::guard('admin')->check())
                     @include('adminlte::partials.sidebar.admin-sidebar')
                 @endif
 
