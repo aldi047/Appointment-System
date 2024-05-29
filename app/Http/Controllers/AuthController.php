@@ -25,6 +25,8 @@ class AuthController extends Controller
             return redirect('admin_dashboard');
         }elseif(Auth::guard('patient')->attempt($data_login)){
             return redirect('patient_dashboard');
+        }elseif(Auth::guard('doctor')->attempt($data_login)){
+            return redirect('doctor_dashboard');
         }else{
             Session::flash('error-message','Nama atau Alamat salah');
             return back();

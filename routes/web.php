@@ -30,8 +30,10 @@ Route::group(['middleware' => 'patient'], function(){
     });
 });
 
-Route::get('/doctor_dashboard', function () {
-    return view('doctor_dashboard');
+Route::group(['middleware' => 'doctor'], function(){
+    Route::get('/doctor_dashboard', function () {
+        return view('doctor_dashboard');
+    });
 });
 
 Route::get('/register', function () {
