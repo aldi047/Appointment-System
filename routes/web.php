@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DrugController;
+use App\Http\Controllers\ExaminationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,10 @@ Route::get('/register', function () {
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('examinations', [ExaminationController::class, 'index']);
+// Route::get('examinations', function(){
+//     return view('examinations.index', ['examinations' => Examination::all()]);
+// });
 
 
 // Middleware Admin

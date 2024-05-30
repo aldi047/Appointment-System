@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('reg_polyclinic_id')->constrained();
             $table->date('tgl_periksa');
             $table->text('catatan');
-            $table->integer('biaya_periksa');
+            $table->bigInteger('biaya_periksa');
             $table->timestamps();
         });
     }

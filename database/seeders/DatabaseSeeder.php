@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Patient;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,5 +21,11 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminSeeder::class);
         $this->call(PatientSeeder::class);
         $this->call(DoctorSeeder::class);
+        $this->call(PolyclinicSeeder::class);
+        $this->call(DrugSeeder::class);
+        $this->call(ExaminationScheduleSeeder::class);
+        $this->call(RegPolyclinicSeeder::class);
+        $this->call(ExaminationSeeder::class);
+        $this->call(ExaminationDetailSeeder::class);
     }
 }

@@ -14,9 +14,4 @@ class Drug extends Model
         'kemasan',
         'harga',
     ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 }

@@ -35,6 +35,7 @@
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Nama</th>
                                 <th>Kemasan</th>
                                 <th>Harga</th>
@@ -44,6 +45,7 @@
                         <tbody>
                             @forelse ($drugs as $drug)
                                 <tr>
+                                    <td class="align-middle">{{ $drug->id }}</td>
                                     <td class="align-middle">{{ $drug->nama_obat }}</td>
                                     <td class="align-middle">{{ $drug->kemasan }}</td>
                                     <td class="align-middle">{{ $drug->harga }}</td>
@@ -61,7 +63,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data Post belum Tersedia.
+                                    Data obat kosong.
                                 </div>
                             @endforelse
                         </tbody>

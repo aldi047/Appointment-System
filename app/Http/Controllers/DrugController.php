@@ -10,7 +10,7 @@ use Illuminate\View\View;
 class DrugController extends Controller
 {
     public function index():View{
-        $drugs = Drug::latest()->paginate(5);
+        $drugs = Drug::all();
         return view ('drugs.index', compact('drugs'));
     }
 

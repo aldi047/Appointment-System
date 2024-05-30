@@ -8,7 +8,7 @@
     </a>
 </li>
 
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">
         <i class="nav-icon fa fa-list-alt"></i>
         <p class="text-nowrap">
@@ -16,10 +16,10 @@
             <span class="right badge badge-success">Dokter</span>
         </p>
     </a>
-</li>
+</li> --}}
 
 <li class="nav-item">
-    <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">
+    <a href="/examinations" class="nav-link {{ request()->is('examinations*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-stethoscope"></i>
         <p class="text-nowrap">
             Memeriksa Pasien
@@ -38,7 +38,7 @@
     </a>
 </li>
 
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user-md"></i>
         <p class="text-nowrap">
@@ -46,4 +46,4 @@
             <span class="right badge badge-success">Dokter</span>
         </p>
     </a>
-</li>
+</li> --}}
