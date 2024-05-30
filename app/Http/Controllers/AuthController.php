@@ -21,12 +21,12 @@ class AuthController extends Controller
             'alamat'  => strtolower($request->alamat),
             'password'  =>  'password'
         ];
-        if (Auth::guard('admin')->attempt($data_login)) {
-            return redirect('admin_dashboard');
+        if (Auth::guard('admin')->attempt($data_login)){
+            return redirect('/');
         }elseif(Auth::guard('patient')->attempt($data_login)){
-            return redirect('patient_dashboard');
+            return redirect('/');
         }elseif(Auth::guard('doctor')->attempt($data_login)){
-            return redirect('doctor_dashboard');
+            return redirect('/');
         }else{
             Session::flash('error-message','Nama atau Alamat salah');
             return back();

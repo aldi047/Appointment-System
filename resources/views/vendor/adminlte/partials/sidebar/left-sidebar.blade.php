@@ -21,8 +21,11 @@
 
                 @if (Auth::guard('admin')->check())
                     @include('adminlte::partials.sidebar.admin-sidebar')
+                @elseif (Auth::guard('doctor')->check())
+                    @include('adminlte::partials.sidebar.doctor-sidebar')
+                @elseif (Auth::guard('patient')->check())
+                    @include('adminlte::partials.sidebar.patient-sidebar')
                 @endif
-
             </ul>
         </nav>
     </div>
