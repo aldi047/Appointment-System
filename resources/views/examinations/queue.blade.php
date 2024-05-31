@@ -14,19 +14,28 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>No Urut</th>
+                                <th>No Antrian</th>
                                 <th>Nama Pasien</th>
                                 <th>Keluhan</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($examinations as $examination)
+                            @forelse ($examination_datas as $examination)
                                 <tr>
-                                    <td class="align-middle">{{ $examination->id }}</td>
-                                    <td class="align-middle">{{ $examination->nama_pasien }}</td>
+                                    <td class="align-middle">{{ $examination->no_antrian }}</td>
+                                    <td class="align-middle">{{ $examination->nama }}</td>
                                     <td class="align-middle">{{ $examination->keluhan }}</td>
-                                    <td>
+                                    <td class="text-center">
+                                        @if ($examination->status_periksa == 0)
+                                        <a class="btn btn-primary btn-sm" href="">
+                                            <i class="nav-icon fas fa-stethoscope"> Periksa</i>
+                                        </a>
+                                        @else
+                                        <a class="btn btn-warning btn-sm" href="">
+                                            <i class="nav-icon fas fa-stethoscope text-grey"> Edit</i>
+                                        </a>
+                                        @endif
                                         {{-- <a class="btn btn-block btn-primary btn-sm"
                                             href="{{ route('examination.edit', $examination->id) }}">Edit</a> --}}
                                     </td>
@@ -40,6 +49,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $examination_datas->links() }}
                 </div>
 
             </div>

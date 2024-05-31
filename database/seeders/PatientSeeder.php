@@ -20,5 +20,13 @@ class PatientSeeder extends Seeder
             'no_hp'=> '085108510851',
             'no_rm'=> '202405-1'
         ]);
+
+        Patient::create([
+            'nama'=> 'azmi',
+            'alamat'=> 'brebes',
+            'no_ktp'=> '1209129012901201',
+            'no_hp'=> '085108510851',
+            'no_rm'=> '202405-1'
+        ]);
     }
 }

@@ -20,5 +20,13 @@ class RegPolyclinicSeeder extends Seeder
             'no_antrian'=> '1',
             'status_periksa'=> '0',
         ]);
+
+        RegPolyclinic::create([
+            'patient_id'=> 2,
+            'examination_schedule_id'=> 1,
+            'keluhan'=> 'Pusing',
+            'no_antrian'=> '2',
+            'status_periksa'=> '0',
+        ]);
     }
 }

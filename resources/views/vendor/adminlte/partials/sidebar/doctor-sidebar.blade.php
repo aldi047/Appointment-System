@@ -29,7 +29,7 @@
 </li>
 
 <li class="nav-item">
-    <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">
+    <a href="/history" class="nav-link {{ request()->is('history*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-book"></i>
         <p class="text-nowrap">
             Riwayat Pasien

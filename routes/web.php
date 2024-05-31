@@ -26,7 +26,8 @@ Route::get('/register', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('examinations', [ExaminationController::class, 'index']);
+Route::get('examinations', [ExaminationController::class, 'examinations']);
+Route::get('history', [ExaminationController::class, 'history']);
 // Route::get('examinations', function(){
 //     return view('examinations.index', ['examinations' => Examination::all()]);
 // });

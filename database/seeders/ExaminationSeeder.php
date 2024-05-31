@@ -19,5 +19,12 @@ class ExaminationSeeder extends Seeder
             'catatan'           => 'Kontrol minggu depan',
             'biaya_periksa'     => 200000
         ]);
+
+        Examination::create([
+            'reg_polyclinic_id' => 2,
+            'tgl_periksa'       => date("Y-m-d"),
+            'catatan'           => 'Kontrol minggu kedua',
+            'biaya_periksa'     => 180000
+        ]);
     }
 }
