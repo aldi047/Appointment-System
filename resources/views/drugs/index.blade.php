@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">
+                    {{-- <div class="card-title">
                         <div class="input-group" style="width: 250px;">
                             <input type="text" name="table_search" class="form-control border-secondary float-right"
                                 placeholder="Search">
@@ -21,7 +21,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="card-tools">
                         <button type="button" class="btn btn-outline-primary btn-block">
                             <a href="{{ route('drugs.create') }}">

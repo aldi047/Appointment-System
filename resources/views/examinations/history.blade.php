@@ -14,7 +14,7 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>No Antrian</th>
+                                <th>No</th>
                                 <th>Nama Pasien</th>
                                 <th>Alamat</th>
                                 <th>No KTP</th>
@@ -24,15 +24,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @forelse ($histories as $history)
+                            @forelse ($histories as $history)
                                 <tr>
-                                    <td class="align-middle">{{ $history->no_antrian }}</td>
+                                    <td class="align-middle">{{ $history->id }}</td>
                                     <td class="align-middle">{{ $history->nama }}</td>
-                                    <td class="align-middle">{{ $history->keluhan }}</td>
+                                    <td class="align-middle">{{ $history->alamat }}</td>
+                                    <td class="align-middle">{{ $history->no_ktp }}</td>
+                                    <td class="align-middle">{{ $history->no_hp }}</td>
+                                    <td class="align-middle">{{ $history->no_rm }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-sm" href="">
-                                            <i class="nav-icon fas fa-stethoscope"> Periksa</i>
-                                        </a>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#historyModal">
+                                            <i class="nav-icon fa fa-eye"> Detail Riwayat Periksa</i>
+                                        </button>
                                     </td>
                                 </tr>
                             @empty
@@ -41,19 +44,13 @@
                                         Tidak ada jadwal pemeriksaan.
                                     </div>
                                 @stop
-                            @endforelse --}}
+                            @endforelse
                         </tbody>
                     </table>
-                    {{-- {{ $histories->links() }} --}}
+                    {{ $histories->links() }}
                 </div>
-
             </div>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">
-                Launch demo modal
-            </button>
 
-            <!-- Modal -->
             <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
@@ -64,7 +61,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="card-body table-responsive p-0" style="height: 65vh;">
+                            <div class="card-body table-responsive p-0">
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
@@ -78,24 +75,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @forelse ($histories as $history)
+                                        @foreach ($histories as $history)
                                             <tr>
-                                                <td class="align-middle">{{ $history->no_antrian }}</td>
+                                                <td class="align-middle">{{ $history->id }}</td>
+                                                <td class="align-middle">{{ $history->tgl_periksa }}</td>
                                                 <td class="align-middle">{{ $history->nama }}</td>
+                                                <td class="align-middle">{{ $nama_dokter}}</td>
                                                 <td class="align-middle">{{ $history->keluhan }}</td>
-                                                <td class="text-center">
-                                                    <a class="btn btn-primary btn-sm" href="">
-                                                        <i class="nav-icon fas fa-stethoscope"> Periksa</i>
-                                                    </a>
-                                                </td>
+                                                <td class="align-middle">{{ $history->catatan }}</td>
+                                                <td class="align-middle">{{ $drugs[$history->id] }}</td>
                                             </tr>
-                                        @empty
-                                            @section('content')
-                                                <div class="alert alert-danger">
-                                                    Tidak ada jadwal pemeriksaan.
-                                                </div>
-                                            @stop
-                                        @endforelse --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

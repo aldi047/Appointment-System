@@ -8,7 +8,7 @@
     </a>
 </li>
 
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a href="/drugs" class="nav-link {{ request()->is('doctor*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-user-md"></i>
         <p class="text-nowrap">
@@ -36,7 +36,7 @@
             <span class="right badge badge-danger">Admin</span>
         </p>
     </a>
-</li>
+</li> --}}
 
 <li class="nav-item">
     <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">

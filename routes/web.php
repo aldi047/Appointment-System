@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\ExaminationController;
+use App\Models\RegPolyclinic;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 // View
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['registration' => RegPolyclinic::count()]);
 });
 Route::get('/register', function () {
     return view('register');
@@ -28,9 +29,8 @@ Route::get('/login', function () {
 });
 Route::get('examinations', [ExaminationController::class, 'examinations']);
 Route::get('history', [ExaminationController::class, 'history']);
-// Route::get('examinations', function(){
-//     return view('examinations.index', ['examinations' => Examination::all()]);
-// });
+// laravel add multiple tag with drop down
+// add search obat
 
 
 // Middleware Admin

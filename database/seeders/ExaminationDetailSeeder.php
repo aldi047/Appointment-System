@@ -37,5 +37,15 @@ class ExaminationDetailSeeder extends Seeder
             'examination_id'    => '2',
             'drug_id'           => '3',
         ]);
+
+        ExaminationDetail::create([
+            'examination_id'    => '3',
+            'drug_id'           => '1',
+        ]);
+
+        ExaminationDetail::create([
+            'examination_id'    => '3',
+            'drug_id'           => '2',
+        ]);
     }
 }
