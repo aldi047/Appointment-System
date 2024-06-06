@@ -8,15 +8,15 @@
     </a>
 </li>
 
-{{-- <li class="nav-item">
-    <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">
+<li class="nav-item">
+    <a href="/schedules" class="nav-link {{ request()->is('schedules*') ? 'active' : '' }}">
         <i class="nav-icon fa fa-list-alt"></i>
         <p class="text-nowrap">
             Jadwal Periksa
             <span class="right badge badge-success">Dokter</span>
         </p>
     </a>
-</li> --}}
+</li>
 
 <li class="nav-item">
     <a href="/examinations" class="nav-link {{ request()->is('examinations*') ? 'active' : '' }}">

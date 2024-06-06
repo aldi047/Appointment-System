@@ -61,6 +61,6 @@ class DrugController extends Controller
     public function destroy($id):RedirectResponse{
         $drug = Drug::findOrFail($id);
         $drug->delete();
-        return redirect()->route('drugs.index')->with(['success' => 'Data Berhasil Dihapus!']);;
+        return redirect()->route('drugs.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }
