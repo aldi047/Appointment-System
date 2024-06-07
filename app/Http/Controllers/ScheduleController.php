@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ExaminationSchedule;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +25,46 @@ class ScheduleController extends Controller
         ->orderBy('jam_mulai')
         ->get();
         // dd($schedules);
-        return view('schedules.index', compact('schedules', 'name'));
+
+        // Get day of week now
+        $date = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $dayofweek = $date->format('l');
+        $days=[
+            'Ahad','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+        ];
+        $dow_number = date('N', strtotime($dayofweek));
+        $today = $days[$dow_number];
+        return view('schedules.index', compact('schedules', 'name', 'today'));
     }
 
     public function create():View{
         return view('schedules.create');
+    }
+
+    private function isScheduleConflict(Request $request){
+        // Check Schedule
+        $prev_schedule = DB::table('examination_schedules')
+            ->where('hari', '=', $request->hari)
+            ->orWhere(function($query) use ($request){
+                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                ->whereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai]);
+            })
+            ->count();
+        // dd($prev_schedule, $request);
+        $isConflict = $prev_schedule > 0;
+        return $isConflict;
+    }
+
+    private function isScheduleToday(String $request_day){
+        // Get day of week now
+        $date = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $dayofweek = $date->format('l');
+        $days=[
+            'Ahad','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+        ];
+        $dow_number = date('N', strtotime($dayofweek));
+        $today = $days[$dow_number];
+        return $request_day == $today;
     }
 
     public function store(Request $request):RedirectResponse{
@@ -38,17 +75,19 @@ class ScheduleController extends Controller
             'jam_selesai'   => 'required',
         ]);
 
-        // Check Schedule
-        $prev_schedule = DB::table('examination_schedules')
-            ->where('hari', '=', $request->hari)
-            ->orWhere(function($query) use ($request){
-                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                ->whereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai]);
-            })
-            ->count();
-        // dd($prev_schedule, $request);
+        // Can't add schedule at the same day
+        if($this->isScheduleToday($request->hari)){
+            $back_data = [
+                'info'          => 'Tidak bisa menambah jadwal pada hari yang sama',
+                'hari'          => $request->hari,
+                'jam_mulai'     => $request->jam_mulai,
+                'jam_selesai'   => $request->jam_selesai,
+            ];
+            return Redirect::back()->with($back_data);
+        }
 
-        if($prev_schedule > 0){
+        // Check Schedule Conflict
+        if($this->isScheduleConflict($request)){
             $back_data = [
                 'info'          => 'Sudah ada jadwal pada jam tersebut',
                 'hari'          => $request->hari,
@@ -68,8 +107,11 @@ class ScheduleController extends Controller
         return redirect()->route('schedules.index');
     }
 
-    public function edit($id):View{
+    public function edit($id){
         $schedule = ExaminationSchedule::findOrFail($id);
+        if($this->isScheduleToday($schedule->hari)){
+            return redirect()->route('schedules.index');
+        }
         return view('schedules.edit', compact('schedule'));
     }
 
@@ -79,6 +121,28 @@ class ScheduleController extends Controller
             'jam_mulai'     => 'required',
             'jam_selesai'   => 'required',
         ]);
+
+        // Can't add schedule at the same day
+        if($this->isScheduleToday($request->hari)){
+            $back_data = [
+                'info'          => 'Tidak bisa menambah jadwal pada hari yang sama',
+                'hari'          => $request->hari,
+                'jam_mulai'     => $request->jam_mulai,
+                'jam_selesai'   => $request->jam_selesai,
+            ];
+            return Redirect::back()->with($back_data);
+        }
+
+        // Check Schedule Conflict
+        if($this->isScheduleConflict($request)){
+            $back_data = [
+                'info'          => 'Sudah ada jadwal pada jam tersebut',
+                'hari'          => $request->hari,
+                'jam_mulai'     => $request->jam_mulai,
+                'jam_selesai'   => $request->jam_selesai,
+            ];
+            return Redirect::back()->with($back_data);
+        }
         $schedule = ExaminationSchedule::findOrFail($id);
         $schedule->update($data);
         return redirect()->route('schedules.index');

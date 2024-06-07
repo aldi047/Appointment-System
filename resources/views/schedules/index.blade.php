@@ -43,8 +43,10 @@
                                     <td class="align-middle">{{ $schedule->jam_selesai }}</td>
                                     <td>
                                         <div class="btn-group btn-block btn-sm">
-                                            <a class="btn btn-primary btn-sm"
-                                                href="{{ route('schedules.edit', $schedule->id) }}">Edit</a>
+                                            @if ($today != $schedule->hari)
+                                                <a class="btn btn-primary btn-sm"
+                                                    href="{{ route('schedules.edit', $schedule->id) }}">Edit</a>
+                                            @endif
                                             {{-- <button type="button" class="btn btn-outline-danger btn-sm">Hapus</button> --}}
                                             <form class="btn btn-danger btn-sm"
                                                 onsubmit="return confirm('Apakah Anda Yakin ?');"

@@ -34,7 +34,8 @@ Route::get('history', [ExaminationController::class, 'history']);
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
 // Todo ====================================================================
-// Input jadwal dokter tidak bisa pada hari yang sama					====
+// Input jadwal dokter tidak bisa pada hari yang sama	(Done)			====
+// Edit jadwal dokter tidak bisa pada hari yang sama + jangan tabrakan  ====
 // Pasien register dengan nik sama langsung login						====
 // =========================================================================
 
