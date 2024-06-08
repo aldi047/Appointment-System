@@ -61,6 +61,7 @@ class ExaminationController extends Controller
             // Kurangan
             // Buat uniq nama pasien (tambah distinc nama_pasien di query)
             // history panggil dengan jquery (tambah where nama_pasien di query)
+            // Coba buat dengan left join supaya tidak terlalu banyak makan memory
         }
         return view('examinations.history', compact('histories', 'nama_dokter', 'drugs'));
     }

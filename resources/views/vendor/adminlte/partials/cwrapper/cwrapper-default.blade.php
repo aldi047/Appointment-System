@@ -8,7 +8,7 @@
 @endif
 
 {{-- Default Content Wrapper --}}
-<div class="{{ $layoutHelper->makeContentWrapperClasses() }}">
+<div class="{{ $layoutHelper->makeContentWrapperClasses() }}" style="max-height: 0vh;overflow: auto;">
 
     {{-- Preloader Animation (cwrapper mode) --}}
     @if($preloaderHelper->isPreloaderEnabled('cwrapper'))

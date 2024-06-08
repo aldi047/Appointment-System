@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\ExaminationController;
+use App\Http\Controllers\PolyclinicController;
 use App\Http\Controllers\ScheduleController;
 use App\Models\RegPolyclinic;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +30,7 @@ Route::get('/register', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('examinations', [ExaminationController::class, 'examinations']);
-Route::get('history', [ExaminationController::class, 'history']);
+
 
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
@@ -52,24 +53,25 @@ Route::get('history', [ExaminationController::class, 'history']);
 // Middleware Admin
 Route::group(['middleware' => 'admin'], function(){
     Route::resource('/drugs', DrugController::class);
+    Route::resource('/doctors', DoctorController::class);
 });
 
 // Middleware Doctor
 Route::group(['middleware' => 'doctor'], function(){
-    Route::get('/doctor_dashboard', function () {
-        return view('doctor_dashboard');
-    });
     Route::resource('/schedules', ScheduleController::class);
+    Route::get('examinations', [ExaminationController::class, 'examinations']);
+    Route::get('history', [ExaminationController::class, 'history']);
 });
 
 // Middleware Patient
 Route::group(['middleware' => 'patient'], function(){
-    Route::get('/patient_dashboard', function () {
-        return view('patient_dashboard');
-    });
+    Route::get('/reg-polyclinic', [RegPolyclinic::class, 'index']);
 });
 
 // Login and Logout
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+// API
+Route::get('/list_polyclinic', [PolyclinicController::class, 'getPolyclinic']);

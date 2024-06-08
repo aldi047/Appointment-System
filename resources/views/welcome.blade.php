@@ -10,7 +10,7 @@
     <div class="col-lg-3 col-6">
 
         <div class="small-box bg-success">
-            <div class="inner">
+            <div class="inner text-center">
                 <h3>{{$registration}} Reservasi</h3>
             </div>
             <div class="icon">
