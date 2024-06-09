@@ -2,13 +2,13 @@
 
 @section('title', 'Daftar Poli')
 
-@section('content_header')
+{{-- @section('content_header')
     <h1>Daftar Poli</h1>
-@stop
+@stop --}}
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 w-100">
+    <div class="row mt-2">
+        <div class="col-sm-12 col-md-6 col-lg-4 col">
             <div class="card">
                 <div class="card-header bg-primary">
                     <div class="card-title">
@@ -16,40 +16,48 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <form action="{{ route('drugs.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('reg-poly') }}" method="POST" enctype="multipart/form-data">
                         <div class="card-body">
                             @csrf
                             <div class="form-group">
                                 <label class="font-weight-bold">Nomor Rekam Medis</label>
-                                <input type="text" class="form-control @error('nama_obat') is-invalid @enderror"
-                                    name="nama_obat" value="{{ old('nama_obat') }}" placeholder="Nama Obat">
-
-                                <!-- error message untuk nama_obat -->
-                                @error('nama_obat')
+                                <input type="text" class="form-control" name="nama_obat"
+                                    value="{{ old('nama_obat', $no_rm) }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Pilih Poli</label>
+                                <select name="polyclinic_id" id="polyclinic_select" class="form-control">
+                                    <option value="">--- Pilih Poli ---</option>
+                                    @forelse ($polyclinics as $polyclinic)
+                                        <option value={{ $polyclinic->id }}>{{ $polyclinic->nama_poli }}</option>
+                                    @empty
+                                        <option value="">Poliklinik Kosong</option>
+                                    @endforelse
+                                </select>
+                                <!-- error message untuk polyclinic_id -->
+                                @error('polyclinic_id')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Kemasan</label>
-                                <input type="text" class="form-control @error('kemasan') is-invalid @enderror"
-                                    name="kemasan" value="{{ old('kemasan') }}" placeholder="Nama Obat">
-
-                                <!-- error message untuk kemasan -->
-                                @error('kemasan')
+                                <label class="font-weight-bold">Pilih Jadwal</label>
+                                <select name="examination_schedule_id" id="examination_schedule" class="form-control">
+                                    <option value="">--- Pilih Jadwal ---</option></select>
+                                <!-- error message untuk examination_schedule_id -->
+                                @error('examination_schedule_id')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Harga</label>
-                                <input type="text" class="form-control @error('harga') is-invalid @enderror"
-                                    name="harga" value="{{ old('harga') }}" placeholder="Nama Obat">
+                                <label class="font-weight-bold">Keluhan</label>
+                                <textarea class="form-control" name="keluhan" rows="2">{{session('keluhan') == null ? "":session('keluhan')}}</textarea>
 
-                                <!-- error message untuk harga -->
-                                @error('harga')
+                                <!-- error message untuk keluhan -->
+                                @error('keluhan')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -81,11 +89,36 @@
                                     <th>Selesai</th>
                                     <th>Antrian</th>
                                     <th>Aksi</th>
-                                    <th class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @forelse ($histories as $history)
+                                    <tr>
+                                        <td class="align-middle text-center">
+                                            @if($loop->iteration == 1)
+                                                <span class="badge badge-primary">Baru</span>
+                                            @else
+                                                {{$loop->iteration}}
+                                            @endif
+                                        </td>
+                                        <td class="align-middle">{{ $history->nama_poli }}</td>
+                                        <td class="align-middle">{{ $history->nama }}</td>
+                                        <td class="align-middle">{{ $history->hari }}</td>
+                                        <td class="align-middle">{{ $history->jam_mulai }}</td>
+                                        <td class="align-middle">{{ $history->jam_selesai }}</td>
+                                        <td class="align-middle">{{ $history->no_antrian }}</td>
+                                        <td>
+                                            <div class="btn-group btn-block btn-sm">
+                                                <a class="btn btn-success btn-sm"
+                                                    href="{{ route('detail',$history->id) }}">Detail</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <div class="alert alert-danger">
+                                        Data Riwayat kosong.
+                                    </div>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -97,9 +130,53 @@
 
 @section('css')
     {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @stop
 
 @section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        @if (session()->has('info'))
+            // Notifikasi
+            var message = @json(session('info'));
+            toastr.options.timeOut = 5000;
+            toastr.info(message, 'Gagal Registrasi Poli');
+        @elseif (session()->has('success'))
+            // Notifikasi
+            var message = @json(session('success'));
+            toastr.options.timeOut = 5000;
+            toastr.success(message, 'Berhasil');
+        @endif
+
+        $(document).ready(function() {
+            var $dropdown = $('#examination_schedule');
+
+            $("#polyclinic_select").on("change", function() {
+                var id_jadwal = $("#polyclinic_select option:selected").val();
+                showDropdownSchedule(id_jadwal);
+
+            });
+
+            function showDropdownSchedule(id) {
+                $.ajax({
+                    type: "GET",
+                    url: location.origin + '/getSchedule/' + id,
+                    success: function(data) {
+                        if (Object.keys(data).length = 0) {
+                            $dropdown.find('option').remove()
+                            $dropdown.append('<option value=""' + '>' + 'Jadwal Kosong' + '</option>');
+                        } else {
+                            $dropdown.find('option').remove()
+                            for (const [key, value] of Object.entries(data)) {
+                                $dropdown.append('<option value =' + value.id + '>' + value.desc +
+                                    '</option>')
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+    </script>
     {{-- <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script> --}}
 @stop

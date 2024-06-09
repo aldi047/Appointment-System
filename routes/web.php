@@ -5,6 +5,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\PolyclinicController;
+use App\Http\Controllers\RegPolyclinicController;
 use App\Http\Controllers\ScheduleController;
 use App\Models\RegPolyclinic;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +66,9 @@ Route::group(['middleware' => 'doctor'], function(){
 
 // Middleware Patient
 Route::group(['middleware' => 'patient'], function(){
-    Route::get('/reg-polyclinic', [RegPolyclinic::class, 'index']);
+    Route::get('/reg-polyclinic', [RegPolyclinicController::class, 'index']);
+    Route::post('/reg-polyclinic', [RegPolyclinicController::class, 'store'])->name('reg-poly');
+    Route::get('/reg-polyclinic/detail-history/{history}', [RegPolyclinicController::class, 'detail'])->name('detail');
 });
 
 // Login and Logout
@@ -75,3 +78,4 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 // API
 Route::get('/list_polyclinic', [PolyclinicController::class, 'getPolyclinic']);
+Route::get('/getSchedule/{id}', [RegPolyclinicController::class, 'getSchedule']);

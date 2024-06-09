@@ -32,7 +32,7 @@ class RegPolyclinicSeeder extends Seeder
         RegPolyclinic::create([
             'patient_id'=> 1,
             'examination_schedule_id'=> 1,
-            'keluhan'=> 'Kontol',
+            'keluhan'=> 'Kontrol',
             'no_antrian'=> '3',
             'status_periksa'=> '1',
         ]);
