@@ -26,7 +26,7 @@ class PatientSeeder extends Seeder
             'alamat'=> 'brebes',
             'no_ktp'=> '1209129012901201',
             'no_hp'=> '085108510851',
-            'no_rm'=> '202405-1'
+            'no_rm'=> '202405-2'
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Polyclinic;
 use App\Models\RegPolyclinic;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,10 +29,10 @@ class RegPolyclinicController extends Controller
         return view('patient.reg-poly', compact('no_rm', 'polyclinics', 'histories'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request):RedirectResponse{
         if($request->examination_schedule_id == null){
             $back_data = [
-                'info'          => 'Jadwal masih kosong!',
+                'error'         => 'Jadwal masih kosong!',
                 'keluhan'       => $request->keluhan
             ];
             return Redirect::back()->with($back_data);
@@ -55,7 +56,7 @@ class RegPolyclinicController extends Controller
         return redirect('/reg-polyclinic')->with('success', 'Berhasil Mendaftar Poli');
     }
 
-    public function detail($id){
+    public function detail($id):View{
         $history = DB::table('polyclinics')
         ->join('doctors', 'polyclinics.id', '=', 'doctors.polyclinic_id')
         ->join('examination_schedules', 'doctors.id', '=', 'examination_schedules.doctor_id')

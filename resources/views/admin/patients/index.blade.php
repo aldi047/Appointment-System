@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Dokter')
+@section('title', 'Pasien')
 
 @section('content_header')
-    <h1>Dokter</h1>
+    <h1>Pasien</h1>
 @stop
 
 @section('content')
@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <a href="{{ route('doctors.create') }}">
+                        <a href="{{ route('patients.create') }}">
                             <button type="button" class="btn btn-outline-primary btn-block">
                                 <i class="fa fa-plus"></i> Tambah
                             </button>
@@ -27,28 +27,30 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Alamat</th>
-                                <th>No.Hp</th>
-                                <th>Poli</th>
+                                <th>Nomor KTP</th>
+                                <th>Nomor HP</th>
+                                <th>Nomor RM</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($doctors as $doctor)
+                            @forelse ($patients as $patient)
                                 <tr>
                                     <td class="align-middle">
                                         {{ ((request()->page <= 0 ? 1 : request()->page) - 1) * $page_items + $loop->iteration }}
                                     </td>
-                                    <td class="align-middle">{{ $doctor->nama }}</td>
-                                    <td class="align-middle">{{ $doctor->alamat }}</td>
-                                    <td class="align-middle">{{ $doctor->no_hp }}</td>
-                                    <td class="align-middle">{{ $doctor->nama_poli }}</td>
+                                    <td class="align-middle">{{ $patient->nama }}</td>
+                                    <td class="align-middle">{{ $patient->alamat }}</td>
+                                    <td class="align-middle">{{ $patient->no_ktp }}</td>
+                                    <td class="align-middle">{{ $patient->no_hp }}</td>
+                                    <td class="align-middle">{{ $patient->no_rm }}</td>
                                     <td>
                                         <div class="btn-group btn-block btn-sm">
                                             <a class="btn btn-primary btn-sm"
-                                                href="{{ route('doctors.edit', $doctor->id) }}">Edit</a>
+                                                href="{{ route('patients.edit', $patient->id) }}">Edit</a>
                                             <form class="btn btn-danger btn-sm"
                                                 onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('doctors.destroy', $doctor->id) }}" method="POST">
+                                                action="{{ route('patients.destroy', $patient->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="bg-transparent border-0 text-white w-100"
@@ -59,7 +61,7 @@
                                 </tr>
                             @empty
                                 <div class="alert alert-danger">
-                                    Data dokter kosong.
+                                    Data Pasien kosong.
                                 </div>
                             @endforelse
                         </tbody>
@@ -67,8 +69,11 @@
                 </div>
             </div>
             <div class="float-right">
-                {{ $doctors->links() }}
+                {{ $patients->links() }}
             </div>
         </div>
     </div>
+
 @stop
+
+

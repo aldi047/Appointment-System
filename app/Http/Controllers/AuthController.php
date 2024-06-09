@@ -6,6 +6,7 @@ use App\Models\Patient;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -44,7 +45,11 @@ class AuthController extends Controller
         // create prefix
         $date = new DateTime();
         $prefix = $date->format('Ym');
-        $count = Patient::count() + 1;
+        $patient_count = Patient::count();
+        $patient_last = DB::table('patients')
+        ->orderByDesc('no_rm')->first()->no_rm;
+        $patient_last_number = substr($patient_last,7);
+        $count = $patient_count == 0 ? 1:$patient_last_number+1;
 
         $no_rm = $prefix.'-'.$count;
 

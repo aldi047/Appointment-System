@@ -18,25 +18,25 @@
     </a>
 </li>
 
-{{-- <li class="nav-item">
-    <a href="/drugs" class="nav-link {{ request()->is('doctor*') ? 'active' : '' }}">
+<li class="nav-item">
+    <a href="/patients" class="nav-link {{ request()->is('patients*') ? 'active' : '' }}">
         <i class="nav-icon fa fa-user"></i>
         <p class="text-nowrap">
             Pasien
             <span class="right badge badge-danger">Admin</span>
         </p>
     </a>
-</li> --}}
+</li>
 
-{{-- <li class="nav-item">
-    <a href="/drugs" class="nav-link {{ request()->is('doctor*') ? 'active' : '' }}">
+<li class="nav-item">
+    <a href="/polyclinics" class="nav-link {{ request()->is('polyclinics*') ? 'active' : '' }}">
         <i class="nav-icon fa fa-building"></i>
         <p class="text-nowrap">
             Poli
             <span class="right badge badge-danger">Admin</span>
         </p>
     </a>
-</li> --}}
+</li>
 
 <li class="nav-item">
     <a href="/drugs" class="nav-link {{ request()->is('drugs*') ? 'active' : '' }}">

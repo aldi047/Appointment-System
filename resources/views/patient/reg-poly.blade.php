@@ -128,26 +128,8 @@
     </div>
 @stop
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-@stop
-
-@section('js')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+@section('javascript')
     <script>
-        @if (session()->has('info'))
-            // Notifikasi
-            var message = @json(session('info'));
-            toastr.options.timeOut = 5000;
-            toastr.info(message, 'Gagal Registrasi Poli');
-        @elseif (session()->has('success'))
-            // Notifikasi
-            var message = @json(session('success'));
-            toastr.options.timeOut = 5000;
-            toastr.success(message, 'Berhasil');
-        @endif
-
         $(document).ready(function() {
             var $dropdown = $('#examination_schedule');
 
@@ -162,9 +144,9 @@
                     type: "GET",
                     url: location.origin + '/getSchedule/' + id,
                     success: function(data) {
-                        if (Object.keys(data).length = 0) {
+                        if (Object.keys(data).length == 0) {
                             $dropdown.find('option').remove()
-                            $dropdown.append('<option value=""' + '>' + 'Jadwal Kosong' + '</option>');
+                            $dropdown.append('<option value="">--- Jadwal Kosong ---</option>');
                         } else {
                             $dropdown.find('option').remove()
                             for (const [key, value] of Object.entries(data)) {
@@ -178,5 +160,4 @@
         });
 
     </script>
-    {{-- <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script> --}}
 @stop

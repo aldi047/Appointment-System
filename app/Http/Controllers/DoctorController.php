@@ -34,7 +34,7 @@ class DoctorController extends Controller
 
         Doctor::create($data);
 
-        return redirect()->route('doctors.index');
+        return redirect()->route('doctors.index')->with(['success' => 'Data Berhasil Disimpan!']);;
     }
 
     public function edit($id):View{
@@ -54,6 +54,12 @@ class DoctorController extends Controller
         // dd($data);
         $doctor->update($data);
 
-        return redirect()->route('doctors.index');
+        return redirect()->route('doctors.index')->with(['success' => 'Data berhasail Diedit!']);
+    }
+
+    public function destroy($id):RedirectResponse{
+        $patient = Doctor::findOrFail($id);
+        $patient->delete();
+        return redirect()->route('doctors.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

@@ -12,11 +12,11 @@ class DrugController extends Controller
     public function index():View{
         $page_items=4;
         $drugs = Drug::latest()->paginate($page_items);
-        return view ('drugs.index', compact('drugs', 'page_items'));
+        return view ('admin.drugs.index', compact('drugs', 'page_items'));
     }
 
     public function create():View{
-        return view('drugs.create');
+        return view('admin.drugs.create');
     }
 
     public function store(Request $request):RedirectResponse{
@@ -31,13 +31,13 @@ class DrugController extends Controller
             'kemasan'   => $request->kemasan,
             'harga'     => $request->harga,
         ]);
-        return redirect()->route('drugs.index');
+        return redirect()->route('drugs.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit($id):View{
         $drug = Drug::findOrFail($id);
         // dd($drug);
-        return view('drugs.edit', compact('drug'));
+        return view('admin.drugs.edit', compact('drug'));
     }
 
     public function update(Request $request, $id):RedirectResponse{
@@ -55,7 +55,7 @@ class DrugController extends Controller
             'harga'     => $request->harga,
         ]);
 
-        return redirect()->route('drugs.index');
+        return redirect()->route('drugs.index')->with(['success' => 'Data Berhasail Diedit!']);;
 
     }
 

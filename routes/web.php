@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\ExaminationController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PolyclinicController;
 use App\Http\Controllers\RegPolyclinicController;
 use App\Http\Controllers\ScheduleController;
@@ -39,6 +40,14 @@ Route::get('/login', function () {
 // Input jadwal dokter tidak bisa pada hari yang sama	(Done)			====
 // Edit jadwal dokter tidak bisa pada hari yang sama + jangan tabrakan  ====
 // Pasien register dengan nik sama langsung login						====
+// Buat halaman wellcome dan welcome ditambah /dashboard				====
+// Rapikan folder view dan routenya                						====
+// Ada fungsi edit yang masih redirect ke home bukan dashboard			====
+// benerin controller yang masih ada with sessionnya                    ====
+// benerin place holder nama obat                                       ====
+// dokter dan obat belum ada flash message                              ====
+// ON DELETE CASCADE pada pasien apakah perlu ???                       ====
+// Uji coba dengan database kosong dan dicoba di ubuntu try from usb    ====
 // =========================================================================
 
 // laravel add multiple tag with drop down
@@ -55,6 +64,8 @@ Route::get('/login', function () {
 Route::group(['middleware' => 'admin'], function(){
     Route::resource('/drugs', DrugController::class);
     Route::resource('/doctors', DoctorController::class);
+    Route::resource('/patients', PatientController::class);
+    Route::resource('/polyclinics', PolyclinicController::class);
 });
 
 // Middleware Doctor
