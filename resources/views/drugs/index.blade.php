@@ -23,15 +23,15 @@
                         </div>
                     </div> --}}
                     <div class="card-tools">
-                        <button type="button" class="btn btn-outline-primary btn-block">
-                            <a href="{{ route('drugs.create') }}">
+                        <a href="{{ route('drugs.create') }}">
+                            <button type="button" class="btn btn-outline-primary btn-block">
                                 <i class="fa fa-plus"></i> Tambah
-                            </a>
-                        </button>
+                            </button>
+                        </a>
                     </div>
                 </div>
 
-                <div class="card-body table-responsive p-0" style="height: 65vh;">
+                <div class="card-body table-responsive p-0">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -45,18 +45,23 @@
                         <tbody>
                             @forelse ($drugs as $drug)
                                 <tr>
-                                    <td class="align-middle">{{ $drug->id }}</td>
+                                    <td class="align-middle">
+                                        {{ ((request()->page <= 0 ? 1 : request()->page) - 1) * $page_items + $loop->iteration }}
+                                    </td>
                                     <td class="align-middle">{{ $drug->nama_obat }}</td>
                                     <td class="align-middle">{{ $drug->kemasan }}</td>
                                     <td class="align-middle">{{ $drug->harga }}</td>
                                     <td>
                                         <div class="btn-group btn-block btn-sm">
-                                            <a class="btn btn-primary btn-sm" href="{{route('drugs.edit', $drug->id)}}">Edit</a>
-                                            {{-- <button type="button" class="btn btn-outline-danger btn-sm">Hapus</button> --}}
-                                            <form class="btn btn-danger btn-sm" onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('drugs.destroy', $drug->id) }}" method="POST">
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('drugs.edit', $drug->id) }}">Edit</a>
+                                            <form class="btn btn-danger btn-sm"
+                                                onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                action="{{ route('drugs.destroy', $drug->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="bg-transparent border-0 text-white" type="submit" >Hapus</button>
+                                                <button class="bg-transparent border-0 text-white w-100"
+                                                    type="submit">Hapus</button>
                                             </form>
                                         </div>
                                     </td>
@@ -69,9 +74,10 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
-
+            <div class="float-right">
+                {{ $drugs->links() }}
+            </div>
         </div>
     </div>
 
