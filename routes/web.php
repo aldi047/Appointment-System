@@ -38,10 +38,12 @@ Route::get('/login', function () {
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
 // Todo ====================================================================
-// benerin controller yang masih ada with sessionnya (kurang dokter)    ====
+// benerin controller yang masih ada with sessionnya (periksa & riwayat)====
+// Rapikan folder view pada dokter              						====
 // Pasien register dengan nik sama langsung login						====
 // Buat halaman wellcome dan welcome ditambah /dashboard				====
 // Buat login menjadi manual jadi tanpa password        				====
+// Install ekstensi github commit                                       ====
 // ==================================================================== ====
 // ON DELETE CASCADE pada pasien apakah perlu ???                       ====
 // Uji coba dengan database kosong dan dicoba di ubuntu try from usb    ====

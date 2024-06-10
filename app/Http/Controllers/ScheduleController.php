@@ -19,13 +19,14 @@ use function Laravel\Prompts\alert;
 class ScheduleController extends Controller
 {
     public function index():View{
+        $page_items=4;
         $id = Auth::guard('doctor')->user()->id;
         $name = Auth::guard('doctor')->user()->nama;
         $schedules = DB::table('examination_schedules')
         ->where('doctor_id', '=', $id)
         ->orderBy('hari')
         ->orderBy('jam_mulai')
-        ->get();
+        ->paginate($page_items);
         // dd($schedules);
 
         // Get day of week now
@@ -37,11 +38,11 @@ class ScheduleController extends Controller
         $dow_number = date('N', strtotime($dayofweek));
         $today = $days[$dow_number-1];
 
-        return view('schedules.index', compact('schedules', 'name', 'today'));
+        return view('doctor.schedules.index', compact('schedules', 'name', 'today', 'page_items'));
     }
 
     public function create():View{
-        return view('schedules.create');
+        return view('doctor.schedules.create');
     }
 
     public function store(Request $request):RedirectResponse{
@@ -89,7 +90,7 @@ class ScheduleController extends Controller
         if($this->isScheduleToday($schedule->hari)){
             return redirect()->route('schedules.index');
         }
-        return view('schedules.edit', compact('schedule'));
+        return view('doctor.schedules.edit', compact('schedule'));
     }
 
     public function update(Request $request, $id):RedirectResponse{

@@ -13,12 +13,12 @@ class ProfileController extends Controller
     public function index():View{
         $id = Auth::guard('doctor')->user()->id;
         $doctor = Doctor::findOrFail($id);
-        return view('profiles.index', compact('doctor'));
+        return view('doctor.profiles.index', compact('doctor'));
     }
 
     public function edit($id):View{
         $doctor = Doctor::findOrFail($id);
-        return view('profiles.edit', compact('doctor'));
+        return view('doctor.profiles.edit', compact('doctor'));
     }
 
     public function update(Request $request, $id):RedirectResponse{

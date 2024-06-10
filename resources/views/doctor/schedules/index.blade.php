@@ -12,7 +12,6 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-
                         <a href="{{ route('schedules.create') }}">
                             <button type="button" class="btn btn-outline-primary btn-block">
                                 <i class="fa fa-plus"></i> Tambah
@@ -21,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="card-body table-responsive p-0" style="height: 65vh;">
+                <div class="card-body table-responsive p-0">
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -36,7 +35,9 @@
                         <tbody>
                             @forelse ($schedules as $schedule)
                                 <tr>
-                                    <td class="align-middle">{{ $loop->iteration }}</td>
+                                    <td class="align-middle">
+                                        {{ ((request()->page <= 0 ? 1 : request()->page) - 1) * $page_items + $loop->iteration }}
+                                    </td>
                                     <td class="align-middle">{{ $name }}</td>
                                     <td class="align-middle">{{ $schedule->hari }}</td>
                                     <td class="align-middle">{{ $schedule->jam_mulai }}</td>
@@ -67,6 +68,9 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="float-right">
+                {{ $schedules->links() }}
             </div>
         </div>
     </div>

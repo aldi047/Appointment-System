@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-body table-responsive p-0" style="height: 65vh;">
+                <div class="card-body table-responsive p-0">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -36,8 +36,6 @@
                                             <i class="nav-icon fas fa-stethoscope text-grey"> Edit</i>
                                         </a>
                                         @endif
-                                        {{-- <a class="btn btn-block btn-primary btn-sm"
-                                            href="{{ route('examination.edit', $examination->id) }}">Edit</a> --}}
                                     </td>
                                 </tr>
                             @empty
@@ -49,12 +47,11 @@
                             @endforelse
                         </tbody>
                     </table>
-                    {{ $examination_datas->links() }}
                 </div>
-
             </div>
-
+            <div class="float-right">
+                {{ $examination_datas->links() }}
+            </div>
         </div>
     </div>
-
 @stop

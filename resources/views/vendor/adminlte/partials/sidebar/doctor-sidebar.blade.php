@@ -22,7 +22,7 @@
     <a href="/examinations" class="nav-link {{ request()->is('examinations*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-stethoscope"></i>
         <p class="text-nowrap">
-            Memeriksa Pasien
+            Periksa Pasien
             <span class="right badge badge-success">Dokter</span>
         </p>
     </a>

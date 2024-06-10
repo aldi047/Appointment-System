@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class ExaminationController extends Controller
 {
     public function examinations():View{
+        $page_items=6;
         $examination_datas = DB::table('examinations')
         ->join('reg_polyclinics', 'examinations.reg_polyclinic_id', '=', 'reg_polyclinics.id')
         ->join('patients', 'reg_polyclinics.patient_id', '=', 'patients.id')
-        ->select('reg_polyclinics.no_antrian', 'patients.nama', 'reg_polyclinics.keluhan', 'reg_polyclinics.status_periksa')->paginate(8);
+        ->select('reg_polyclinics.no_antrian', 'patients.nama', 'reg_polyclinics.keluhan', 'reg_polyclinics.status_periksa')
+        ->paginate($page_items);
         // dd($examination_datas);
-        return view('examinations.queue', compact('examination_datas'));
+        return view('doctor.examinations.queue', compact('examination_datas'));
     }
     public function history():View{
         $id = Auth::guard('doctor')->user()->id;
@@ -63,6 +65,6 @@ class ExaminationController extends Controller
             // history panggil dengan jquery (tambah where nama_pasien di query)
             // Coba buat dengan left join supaya tidak terlalu banyak makan memory
         }
-        return view('examinations.history', compact('histories', 'nama_dokter', 'drugs'));
+        return view('doctor.examinations.history', compact('histories', 'nama_dokter', 'drugs'));
     }
 }
