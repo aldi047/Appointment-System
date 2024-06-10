@@ -64,7 +64,7 @@
             @if (session()->has('success'))
                 toastr.success("{{ Session::get('success') }}", 'BERHASIL');
             @elseif (session()->has('info'))
-                toastr.info("{{ Session::get('info') }}", 'BERHASIL');
+                toastr.info("{{ Session::get('info') }}", 'INFORMASI');
             @elseif (session()->has('error'))
                 toastr.error("{{ Session::get('error') }}", 'GAGAL');
             @endif

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\ExaminationSchedule;
 use DateTime;
 use DateTimeZone;
+use Hamcrest\Type\IsBoolean;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Ramsey\Uuid\Type\Integer;
 
 use function Laravel\Prompts\alert;
 
@@ -62,7 +64,7 @@ class ScheduleController extends Controller
         }
 
         // Check Schedule Conflict
-        if($this->isScheduleConflict($request)){
+        if($this->isScheduleConflict($request, 0)){
             $back_data = [
                 'info'          => 'Sudah ada jadwal pada jam tersebut',
                 'hari'          => $request->hari,
@@ -109,7 +111,7 @@ class ScheduleController extends Controller
         }
 
         // Check Schedule Conflict
-        if($this->isScheduleConflict($request)){
+        if($this->isScheduleConflict($request, $id)){
             $back_data = [
                 'info'          => 'Sudah ada jadwal pada jam tersebut',
                 'hari'          => $request->hari,
@@ -126,10 +128,10 @@ class ScheduleController extends Controller
     public function destroy($id):RedirectResponse{
         $schedule = ExaminationSchedule::findOrFail($id);
         $schedule->delete();
-        return redirect()->route('schedules.index')->with(['success', 'Jadwal Berhasail Dihapus!']);;
+        return redirect()->route('schedules.index')->with('success','Jadwal Berhasail Dihapus!');;
     }
 
-    private function isScheduleConflict(Request $request){
+    private function isScheduleConflict(Request $request, int $updateId){
         // Check Schedule
         $prev_schedule = DB::table('examination_schedules')
             ->where('hari', '=', $request->hari)
@@ -138,11 +140,19 @@ class ScheduleController extends Controller
                     $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai]);
                 })->orWhere(function($query) use ($request){
                     $query->whereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai]);
+                })->orWhere(function($query) use ($request){
+                    $query->where('jam_mulai', '<', $request->jam_mulai)
+                    ->where('jam_selesai', '>', $request->jam_selesai);
                 });
-            })
-            ->count();
+            });
         // dd($prev_schedule, $request);
-        $isConflict = $prev_schedule > 0;
+        if($updateId != 0){
+            // dd($updateId);
+            $prev_schedule = $prev_schedule->whereNot('id', '=', $updateId);
+            // dd($data->get());
+        }
+        $prev_schedule_count = count($prev_schedule->get());
+        $isConflict = $prev_schedule_count > 0;
         return $isConflict;
     }
 
