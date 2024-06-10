@@ -7,6 +7,7 @@
 @section('adminlte_css')
     @stack('css')
     @yield('css')
+    <link rel="stylesheet" href={{ asset('assets/css/toastr.min.css') }}>
 @stop
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
@@ -56,4 +57,17 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+    <script src={{asset('assets/js/toastr.min.js')}}></script>
+    <script>
+        $(document).ready(function() {
+            toastr.options.timeOut = 4000;
+            @if (session()->has('success'))
+                toastr.success("{{ Session::get('success') }}", 'BERHASIL');
+            @elseif (session()->has('info'))
+                toastr.info("{{ Session::get('info') }}", 'BERHASIL');
+            @elseif (session()->has('error'))
+                toastr.error("{{ Session::get('error') }}", 'GAGAL');
+            @endif
+        });
+    </script>
 @stop

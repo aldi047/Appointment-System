@@ -66,25 +66,3 @@
         </div>
     </div>
 @stop
-
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-@stop
-
-@section('js')
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        //message with toastr
-        @if (session()->has('info'))
-            // Isi dropdown
-            var day = @json(session('hari'));
-            $('#select_hari').val(day).selected;
-
-            // Notifikasi
-            var message = @json(session('info'));
-            toastr.options.timeOut = 5000;
-            toastr.info(message, 'Gagal Tambah Jadwal');
-        @endif
-    </script>
-@stop

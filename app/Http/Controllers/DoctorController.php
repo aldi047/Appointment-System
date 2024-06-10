@@ -54,7 +54,7 @@ class DoctorController extends Controller
         // dd($data);
         $doctor->update($data);
 
-        return redirect()->route('doctors.index')->with(['success' => 'Data berhasail Diedit!']);
+        return redirect()->route('doctors.index')->with(['success' => 'Data Berhasail Diedit!']);
     }
 
     public function destroy($id):RedirectResponse{

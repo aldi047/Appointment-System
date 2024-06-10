@@ -30,41 +30,16 @@ class ScheduleController extends Controller
         $date = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
         $dayofweek = $date->format('l');
         $days=[
-            'Ahad','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
+            'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu','Minggu'
         ];
         $dow_number = date('N', strtotime($dayofweek));
-        $today = $days[$dow_number];
+        $today = $days[$dow_number-1];
+
         return view('schedules.index', compact('schedules', 'name', 'today'));
     }
 
     public function create():View{
         return view('schedules.create');
-    }
-
-    private function isScheduleConflict(Request $request){
-        // Check Schedule
-        $prev_schedule = DB::table('examination_schedules')
-            ->where('hari', '=', $request->hari)
-            ->orWhere(function($query) use ($request){
-                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                ->whereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai]);
-            })
-            ->count();
-        // dd($prev_schedule, $request);
-        $isConflict = $prev_schedule > 0;
-        return $isConflict;
-    }
-
-    private function isScheduleToday(String $request_day){
-        // Get day of week now
-        $date = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
-        $dayofweek = $date->format('l');
-        $days=[
-            'Ahad','Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
-        ];
-        $dow_number = date('N', strtotime($dayofweek));
-        $today = $days[$dow_number];
-        return $request_day == $today;
     }
 
     public function store(Request $request):RedirectResponse{
@@ -104,7 +79,7 @@ class ScheduleController extends Controller
             'jam_selesai'   => $request->jam_selesai,
         ]);
 
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with('success', 'Jadwal Berhasail Ditambahkan!');
     }
 
     public function edit($id){
@@ -145,12 +120,41 @@ class ScheduleController extends Controller
         }
         $schedule = ExaminationSchedule::findOrFail($id);
         $schedule->update($data);
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with('success', 'Jadwal Berhasail Diedit!');;
     }
 
     public function destroy($id):RedirectResponse{
         $schedule = ExaminationSchedule::findOrFail($id);
         $schedule->delete();
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with(['success', 'Jadwal Berhasail Dihapus!']);;
+    }
+
+    private function isScheduleConflict(Request $request){
+        // Check Schedule
+        $prev_schedule = DB::table('examination_schedules')
+            ->where('hari', '=', $request->hari)
+            ->where(function($query) use ($request){
+                $query->orWhere(function($query) use ($request){
+                    $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai]);
+                })->orWhere(function($query) use ($request){
+                    $query->whereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai]);
+                });
+            })
+            ->count();
+        // dd($prev_schedule, $request);
+        $isConflict = $prev_schedule > 0;
+        return $isConflict;
+    }
+
+    private function isScheduleToday(String $request_day){
+        // Get day of week now
+        $date = new DateTime("now", new DateTimeZone('Asia/Jakarta'));
+        $dayofweek = $date->format('l');
+        $days=[
+            'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu','Minggu'
+        ];
+        $dow_number = date('N', strtotime($dayofweek));
+        $today = $days[$dow_number-1];
+        return $request_day == $today;
     }
 }

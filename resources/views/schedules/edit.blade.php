@@ -66,11 +66,6 @@
     </div>
 @stop
 
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@stop
-
 @section('js')
     <script>
         $(document).ready(function() {
@@ -79,5 +74,4 @@
             // $('#select_hari').val(day).attr('selected', 'selected');
         });
     </script>
-    {{-- <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script> --}}
 @stop

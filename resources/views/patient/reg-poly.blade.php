@@ -128,7 +128,7 @@
     </div>
 @stop
 
-@section('javascript')
+@section('js')
     <script>
         $(document).ready(function() {
             var $dropdown = $('#examination_schedule');

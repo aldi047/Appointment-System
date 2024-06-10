@@ -6,6 +6,7 @@ use App\Http\Controllers\DrugController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PolyclinicController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegPolyclinicController;
 use App\Http\Controllers\ScheduleController;
 use App\Models\RegPolyclinic;
@@ -37,17 +38,20 @@ Route::get('/login', function () {
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
 // Todo ====================================================================
-// Input jadwal dokter tidak bisa pada hari yang sama	(Done)			====
-// Edit jadwal dokter tidak bisa pada hari yang sama + jangan tabrakan  ====
+// benerin controller yang masih ada with sessionnya (kurang dokter)    ====
 // Pasien register dengan nik sama langsung login						====
 // Buat halaman wellcome dan welcome ditambah /dashboard				====
-// Rapikan folder view dan routenya                						====
-// Ada fungsi edit yang masih redirect ke home bukan dashboard			====
-// benerin controller yang masih ada with sessionnya                    ====
-// benerin place holder nama obat                                       ====
-// dokter dan obat belum ada flash message                              ====
+// Buat login menjadi manual jadi tanpa password        				====
+// ==================================================================== ====
 // ON DELETE CASCADE pada pasien apakah perlu ???                       ====
 // Uji coba dengan database kosong dan dicoba di ubuntu try from usb    ====
+// ==================================================================== ====
+// Input jadwal dokter tidak bisa pada hari yang sama	(Done)			====
+// Edit jadwal dokter tidak bisa today + jangan tabrakan (Done)         ====
+// Rapikan folder view dan routenya    (Done)      						====
+// Ada fungsi edit yang masih redirect ke home bukan dashboard (Done)	====
+// benerin place holder nama obat    (Done)                             ====
+// dokter dan obat belum ada flash message    (Done)                    ====
 // =========================================================================
 
 // laravel add multiple tag with drop down
@@ -73,6 +77,9 @@ Route::group(['middleware' => 'doctor'], function(){
     Route::resource('/schedules', ScheduleController::class);
     Route::get('examinations', [ExaminationController::class, 'examinations']);
     Route::get('history', [ExaminationController::class, 'history']);
+    Route::get('profiles', [ProfileController::class, 'index'])->name('profiles.index');
+    Route::get('profiles/edit/{id}', [ProfileController::class, 'edit'])->name('profiles.edit');
+    Route::match(['put', 'patch'],'profiles/{id}', [ProfileController::class, 'update'])->name('profiles.update');
 });
 
 // Middleware Patient
