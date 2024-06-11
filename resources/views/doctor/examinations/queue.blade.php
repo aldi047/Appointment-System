@@ -28,13 +28,15 @@
                                     <td class="align-middle">{{ $examination->keluhan }}</td>
                                     <td class="text-center">
                                         @if ($examination->status_periksa == 0)
-                                        <a class="btn btn-primary btn-sm" href="">
-                                            <i class="nav-icon fas fa-stethoscope"> Periksa</i>
-                                        </a>
+                                            <a class="btn btn-primary btn-sm"
+                                                href={{ route('examinations.create', ['id' => $examination->id]) }}>
+                                                <i class="nav-icon fas fa-stethoscope"> Periksa</i>
+                                            </a>
                                         @else
-                                        <a class="btn btn-warning btn-sm" href="">
-                                            <i class="nav-icon fas fa-stethoscope text-grey"> Edit</i>
-                                        </a>
+                                            <a class="btn btn-warning btn-sm"
+                                                href={{ route('examinations.edit', $examination->id) }}>
+                                                <i class="nav-icon fas fa-stethoscope text-grey"> Edit</i>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

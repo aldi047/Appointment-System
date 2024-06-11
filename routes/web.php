@@ -38,23 +38,18 @@ Route::get('/login', function () {
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
 // Todo ====================================================================
+// https://laravel-news.com/passwordless-authentication-in-laravel
+// https://stackoverflow.com/questions/70181985/laravel-how-to-use-authattempt-without-password-replace-by-other-column
 // benerin controller yang masih ada with sessionnya (periksa & riwayat)====
-// Rapikan folder view pada dokter              						====
 // Pasien register dengan nik sama langsung login						====
 // Buat halaman wellcome dan welcome ditambah /dashboard				====
+// Testing dengan database kosong                                       ====
 // Buat login menjadi manual jadi tanpa password        				====
 // Install ekstensi github commit                                       ====
 // ==================================================================== ====
 // ON DELETE CASCADE pada pasien apakah perlu ???                       ====
 // Uji coba dengan database kosong dan dicoba di ubuntu try from usb    ====
 // ==================================================================== ====
-// Input jadwal dokter tidak bisa pada hari yang sama	(Done)			====
-// Edit jadwal dokter tidak bisa today + jangan tabrakan (Done)         ====
-// Rapikan folder view dan routenya    (Done)      						====
-// Ada fungsi edit yang masih redirect ke home bukan dashboard (Done)	====
-// benerin place holder nama obat    (Done)                             ====
-// dokter dan obat belum ada flash message    (Done)                    ====
-// =========================================================================
 
 // laravel add multiple tag with drop down
 // https://www.youtube.com/watch?v=fkJvgcwrVlQ
@@ -77,7 +72,7 @@ Route::group(['middleware' => 'admin'], function(){
 // Middleware Doctor
 Route::group(['middleware' => 'doctor'], function(){
     Route::resource('/schedules', ScheduleController::class);
-    Route::get('examinations', [ExaminationController::class, 'examinations']);
+    Route::resource('examinations', ExaminationController::class);
     Route::get('history', [ExaminationController::class, 'history']);
     Route::get('profiles', [ProfileController::class, 'index'])->name('profiles.index');
     Route::get('profiles/edit/{id}', [ProfileController::class, 'edit'])->name('profiles.edit');
@@ -99,3 +94,5 @@ Route::get('/logout', [AuthController::class, 'logout']);
 // API
 Route::get('/list_polyclinic', [PolyclinicController::class, 'getPolyclinic']);
 Route::get('/getSchedule/{id}', [RegPolyclinicController::class, 'getSchedule']);
+Route::get('/getDrugs', [ExaminationController::class, 'getDrugs']);
+Route::get('/getDrugs/s/{id}', [ExaminationController::class, 'getDrugsSelected']);

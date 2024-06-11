@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reg_polyclinic_id')->constrained();
-            $table->date('tgl_periksa');
+            $table->dateTime('tgl_periksa');
             $table->text('catatan');
             $table->bigInteger('biaya_periksa');
             $table->timestamps();

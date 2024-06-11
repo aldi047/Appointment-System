@@ -8,6 +8,7 @@
     @stack('css')
     @yield('css')
     <link rel="stylesheet" href={{ asset('assets/css/toastr.min.css') }}>
+    <link rel="stylesheet" href={{ asset('assets/css/select2.min.css') }}>
 @stop
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
@@ -58,6 +59,7 @@
     @stack('js')
     @yield('js')
     <script src={{asset('assets/js/toastr.min.js')}}></script>
+    <script src={{asset('assets/js/select2.min.js')}}></script>
     <script>
         $(document).ready(function() {
             toastr.options.timeOut = 4000;

@@ -44,9 +44,14 @@ class RegPolyclinicController extends Controller
 
         $queue = DB::table('reg_polyclinics')
         ->where('examination_schedule_id', '=', $request->examination_schedule_id)
-        ->orderByDesc('no_antrian')->first();
+        ->orderByDesc('no_antrian');
 
-        $no_antrian = $queue->no_antrian + 1;
+        $no_antrian = 0;
+        if ($queue->count() == 0){
+            $no_antrian = 1;
+        } else {
+            $no_antrian = $queue->first()->no_antrian + 1;
+        }
         $data += ['patient_id'=> Auth::guard('patient')->user()->id,
             'no_antrian'=> $no_antrian,
             'status_periksa'=> '0'];

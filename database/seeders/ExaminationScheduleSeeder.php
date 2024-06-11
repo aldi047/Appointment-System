@@ -19,5 +19,23 @@ class ExaminationScheduleSeeder extends Seeder
             'jam_mulai'=> '10',
             'jam_selesai'=> '12',
         ]);
+        ExaminationSchedule::create([
+            'doctor_id'=> 1,
+            'hari'=> 'Selasa',
+            'jam_mulai'=> '7',
+            'jam_selesai'=> '10',
+        ]);
+        ExaminationSchedule::create([
+            'doctor_id'=> 2,
+            'hari'=> 'Rabu',
+            'jam_mulai'=> '15',
+            'jam_selesai'=> '17',
+        ]);
+        ExaminationSchedule::create([
+            'doctor_id'=> 3,
+            'hari'=> 'Kamis',
+            'jam_mulai'=> '19',
+            'jam_selesai'=> '21',
+        ]);
     }
 }

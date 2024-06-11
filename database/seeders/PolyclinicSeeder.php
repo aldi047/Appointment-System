@@ -14,8 +14,16 @@ class PolyclinicSeeder extends Seeder
     public function run(): void
     {
         Polyclinic::create([
-            'nama_poli'=> 'Poli gigi',
+            'nama_poli'     => 'Poli gigi',
             'keterangan'    => 'Melayani kesehatan gigi'
+        ]);
+        Polyclinic::create([
+            'nama_poli'     => 'Poli Anak',
+            'keterangan'    => 'Poliklinik untuk anak-anak'
+        ]);
+        Polyclinic::create([
+            'nama_poli'     => 'Poli Mata',
+            'keterangan'    => 'Melayani Pelayanan Kesahatan Mata'
         ]);
     }
 }

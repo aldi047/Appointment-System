@@ -34,7 +34,7 @@ class DoctorController extends Controller
 
         Doctor::create($data);
 
-        return redirect()->route('doctors.index')->with(['success' => 'Data Berhasil Disimpan!']);;
+        return redirect()->route('doctors.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit($id):View{
