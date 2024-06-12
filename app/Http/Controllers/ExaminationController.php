@@ -79,7 +79,7 @@ class ExaminationController extends Controller
         $examination_data = DB::table('examinations')
         ->join('reg_polyclinics', 'examinations.reg_polyclinic_id', '=', 'reg_polyclinics.id')
         ->join('patients', 'reg_polyclinics.patient_id', '=', 'patients.id')
-        ->select('patients.nama', 'examinations.id', 'examinations.tgl_periksa', 'examinations.catatan')
+        ->select('patients.nama', 'examinations.id', 'examinations.tgl_periksa', 'examinations.catatan','examinations.biaya_periksa')
         ->where('reg_polyclinics.id', '=', $id)
         ->first();
         $drugs = DB::table('examination_details')->where('examination_id', '=', $examination_data->id)->get('drug_id');

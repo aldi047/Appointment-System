@@ -47,9 +47,9 @@ Route::get('/login', function () {
 
 // https://laravel-news.com/passwordless-authentication-in-laravel
 // https://stackoverflow.com/questions/70181985/laravel-how-to-use-authattempt-without-password-replace-by-other-column
-// benerin controller yang masih ada with sessionnya (periksa & riwayat)====
+// Buat Dashboard lebih ramai                                           ====
 // Pasien register dengan nik sama langsung login						====
-// Buat halaman wellcome dan welcome ditambah /dashboard				====
+// Buat halaman wellcome dan welcome ditambah url /dashboard		    ====
 // Testing dengan database kosong                                       ====
 // Buat login menjadi manual jadi tanpa password        				====
 // Install ekstensi github commit                                       ====

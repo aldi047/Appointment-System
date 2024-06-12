@@ -56,6 +56,10 @@
                                     </div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Biaya Periksa</label>
+                                <input type="text" class="form-control" value="{{ $examination_data->biaya_periksa }}" disabled>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-md btn-warning float-right mx-4">Edit</button>
                     </form>
