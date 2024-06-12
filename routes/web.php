@@ -38,6 +38,13 @@ Route::get('/login', function () {
 
 //  FUNGSI GET NOMOR ANTRIAN ADA DI FOTO
 // Todo ====================================================================
+
+
+//                           JQUERY GET ROW
+//https://stackoverflow.com/questions/10789503/how-to-highlight-selected-row-with-jquery
+
+
+
 // https://laravel-news.com/passwordless-authentication-in-laravel
 // https://stackoverflow.com/questions/70181985/laravel-how-to-use-authattempt-without-password-replace-by-other-column
 // benerin controller yang masih ada with sessionnya (periksa & riwayat)====
@@ -96,3 +103,4 @@ Route::get('/list_polyclinic', [PolyclinicController::class, 'getPolyclinic']);
 Route::get('/getSchedule/{id}', [RegPolyclinicController::class, 'getSchedule']);
 Route::get('/getDrugs', [ExaminationController::class, 'getDrugs']);
 Route::get('/getDrugs/s/{id}', [ExaminationController::class, 'getDrugsSelected']);
+Route::get('/patient-history/{no_rm}', [ExaminationController::class, 'getPatientHistory']);
