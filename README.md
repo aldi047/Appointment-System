@@ -2,19 +2,21 @@
 
 Appointment system for hospital
 
-# Getting Started
+## Getting Started
 
 For first time cloning run this command first:
 composer install
 
-# Create ENV
+## Create ENV
 
 Create .env file using .env.example
 
-# Run Application/Server
+## Database Migration
 
-php artisan migrate
-php artisan db:seed --class=AdminSeeder
+php artisan migrate:fresh --seed --seeder=AdminSeeder
+
+## Run Application/Server
+
 php artisan serve
 
 
