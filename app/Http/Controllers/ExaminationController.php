@@ -145,9 +145,9 @@ class ExaminationController extends Controller
         ->join('patients', 'reg_polyclinics.patient_id', '=', 'patients.id')
         ->join('examination_schedules', 'reg_polyclinics.examination_schedule_id', '=', 'examination_schedules.id')
         ->join('examinations', 'reg_polyclinics.id', '=', 'examinations.reg_polyclinic_id')
-        ->select('patients.*', 'examinations.id')
         ->where('examination_schedules.doctor_id', '=', $id)
-        // ->select(DB::raw('SELECT DISTINCT 'ad_advertiser' FROM 'adverts''))
+        ->distinct()->select('patients.*')
+        // ->select(DB::raw('DISTINCT nama, alamat, no_ktp, no_hp, no_rm'))
         ->paginate($page_items);
         // dd($histories);
 

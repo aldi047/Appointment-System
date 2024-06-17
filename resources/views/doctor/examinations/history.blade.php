@@ -41,7 +41,6 @@
                                             <i class="nav-icon fa fa-eye"> Detail Riwayat Periksa</i>
                                         </button>
                                     </td>
-                                    <td hidden id="examination_id">{{$history->id}}</td>
                                 </tr>
                             @empty
                                 @section('content')
@@ -55,7 +54,7 @@
                 </div>
             </div>
             <div class="float-right">
-                {{ $histories->links() }}
+                {{-- {{ $histories->links() }} --}}
             </div>
             <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -97,7 +96,6 @@
         $(document).ready(function() {
             $('tr').click(function() {
                 var noRM = $(this).find('#no_rm').text();
-                var examination_id = $(this).find('#examination_id').text();
                 let table = document.getElementById("tb_history");
 
                 // delete element

@@ -115,9 +115,9 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <div class="alert alert-danger">
+                                    <td class="alert alert-danger text-center" colspan="8">
                                         Data Riwayat kosong.
-                                    </div>
+                                    </td>
                                 @endforelse
                             </tbody>
                         </table>
