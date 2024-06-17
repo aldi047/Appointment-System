@@ -58,9 +58,11 @@
                                     </td>
                                 </tr>
                             @empty
-                                <div class="alert alert-danger">
-                                    Data dokter kosong.
-                                </div>
+                                @section('content')
+                                    <div class="alert alert-danger">
+                                        Data dokter kosong.
+                                    </div>
+                                @stop
                             @endforelse
                         </tbody>
                     </table>
