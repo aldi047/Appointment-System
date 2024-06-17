@@ -54,9 +54,9 @@
                                     </td>
                                 </tr>
                             @empty
-                                <div class="alert alert-danger">
+                                <td class="alert alert-danger text-center" colspan="4">
                                     Data poliklinik kosong.
-                                </div>
+                                </td>
                             @endforelse
                         </tbody>
                     </table>

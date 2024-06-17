@@ -60,9 +60,9 @@
                                     </td>
                                 </tr>
                             @empty
-                                <div class="alert alert-danger">
-                                    Data Pasien kosong.
-                                </div>
+                                <td class="alert alert-danger text-center" colspan="7">
+                                    Data pasien kosong.
+                                </td>
                             @endforelse
                         </tbody>
                     </table>
