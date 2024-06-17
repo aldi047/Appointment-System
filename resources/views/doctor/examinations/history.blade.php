@@ -20,6 +20,7 @@
                                 <th>No KTP</th>
                                 <th>No Telepon</th>
                                 <th>No RM</th>
+                                <th hidden>Exam Id</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -40,6 +41,7 @@
                                             <i class="nav-icon fa fa-eye"> Detail Riwayat Periksa</i>
                                         </button>
                                     </td>
+                                    <td hidden id="examination_id">{{$history->id}}</td>
                                 </tr>
                             @empty
                                 @section('content')
@@ -95,6 +97,7 @@
         $(document).ready(function() {
             $('tr').click(function() {
                 var noRM = $(this).find('#no_rm').text();
+                var examination_id = $(this).find('#examination_id').text();
                 let table = document.getElementById("tb_history");
 
                 // delete element
@@ -125,7 +128,6 @@
                             let row = document.createElement("tr")
 
                             let nama_dokter = @json($nama_dokter).replace('"','');
-                            let obat = @json($drugs[$history->id]).replace('"','');
 
                             row.innerHTML = `<tr><td class="align-middle">${parseInt(key) + 1}</td>
                             <td class="align-middle">${value.tgl_periksa.substring(0,10)}</td>
@@ -133,7 +135,7 @@
                             <td class="align-middle">${nama_dokter}</td>
                             <td class="align-middle">${value.keluhan}</td>
                             <td class="align-middle">${value.catatan}</td>
-                            <td class="align-middle">${obat}</td></tr>`;
+                            <td class="align-middle">${value.obat}</td></tr>`;
 
                             // Append row to table body
                             table.appendChild(row)

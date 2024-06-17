@@ -102,3 +102,23 @@
         </p>
     @endif
 @stop
+
+@section('css')
+    <link rel="stylesheet" href={{ asset('assets/css/toastr.min.css') }}>
+@stop
+
+@section('js')
+    <script src={{asset('assets/js/toastr.min.js')}}></script>
+    <script>
+        $(document).ready(function() {
+            toastr.options.timeOut = 4000;
+            @if (session()->has('success'))
+                toastr.success("{{ Session::get('success') }}", 'BERHASIL');
+            @elseif (session()->has('info'))
+                toastr.info("{{ Session::get('info') }}", 'INFORMASI');
+            @elseif (session()->has('error'))
+                toastr.error("{{ Session::get('error') }}", 'GAGAL');
+            @endif
+        });
+    </script>
+@stop

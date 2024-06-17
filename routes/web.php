@@ -47,6 +47,7 @@ Route::get('/login', function () {
 
 // https://laravel-news.com/passwordless-authentication-in-laravel
 // https://stackoverflow.com/questions/70181985/laravel-how-to-use-authattempt-without-password-replace-by-other-column
+// get history id dengan klik
 // Buat Dashboard lebih ramai                                           ====
 // Pasien register dengan nik sama langsung login						====
 // Buat halaman wellcome dan welcome ditambah url /dashboard		    ====

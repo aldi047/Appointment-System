@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,15 @@ class AuthController extends Controller
             'alamat'  => strtolower($request->alamat),
             'password'  =>  'password'
         ];
+        // attemp ganti varible model user
+        // $user = Patient::query()->where('nama', '=', $data_login['nama'])
+        // ->where('alamat', '=', $data_login['alamat'])
+        // ->firstOrFail();
+
+        // if(Auth::guard('patient')->login($user)){
+        //     return redirect('/');
+        // }
+
         if (Auth::guard('admin')->attempt($data_login)){
             return redirect('/');
         }elseif(Auth::guard('patient')->attempt($data_login)){
@@ -29,8 +39,7 @@ class AuthController extends Controller
         }elseif(Auth::guard('doctor')->attempt($data_login)){
             return redirect('/');
         }else{
-            Session::flash('error-message','Nama atau Alamat salah');
-            return back();
+            return back()->with('error','Nama atau Alamat salah');
         }
     }
 

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ExaminationController extends Controller
 {
@@ -143,43 +144,14 @@ class ExaminationController extends Controller
         $histories = DB::table('reg_polyclinics')
         ->join('patients', 'reg_polyclinics.patient_id', '=', 'patients.id')
         ->join('examination_schedules', 'reg_polyclinics.examination_schedule_id', '=', 'examination_schedules.id')
-        ->select('patients.*')
+        ->join('examinations', 'reg_polyclinics.id', '=', 'examinations.reg_polyclinic_id')
+        ->select('patients.*', 'examinations.id')
         ->where('examination_schedules.doctor_id', '=', $id)
-        ->distinct()
+        // ->select(DB::raw('SELECT DISTINCT 'ad_advertiser' FROM 'adverts''))
         ->paginate($page_items);
         // dd($histories);
 
-        // Get Detail Periksa
-        $drug_details = DB::table('examination_details')->get();
-        // Get Obat
-        $drug_listdb = DB::table('drugs')->get();
-
-        // Set obat as list
-        $drug_list=[];
-        foreach($drug_listdb as $drug){
-            $drug_list[$drug->id] = $drug->nama_obat;
-        }
-
-        // Set list obat
-        $drugs=array();
-        foreach($drug_details as $drug_detail){
-            // Id periksa
-            $id=$drug_detail->examination_id;
-            // // Init value
-            if(empty($drugs[$id])){
-                $drugs[$id] = $drug_list[$drug_detail->drug_id];
-                continue;
-            }
-            $array_before = $drugs[$id] .', '. $drug_list[$drug_detail->drug_id];
-            // // Tambah ke list
-            $drugs[$id] = $array_before;
-
-            // Kurangan
-            // Buat uniq nama pasien (tambah distinc nama_pasien di query)
-            // history panggil dengan jquery (tambah where nama_pasien di query)
-            // Coba buat dengan left join supaya tidak terlalu banyak makan memory
-        }
-        return view('doctor.examinations.history', compact('histories', 'nama_dokter', 'drugs', 'page_items'));
+        return view('doctor.examinations.history', compact('histories', 'nama_dokter', 'page_items'));
     }
 
     public function getDrugs(Request $request){
@@ -218,6 +190,42 @@ class ExaminationController extends Controller
         ->where('examination_schedules.doctor_id', '=', $idDokter)
         ->where('patients.no_rm', '=', $no_rm)
         ->get();
+
+        // Get Detail Periksa
+        $drug_details = DB::table('examination_details')->get();
+        // Get Obat
+        $drug_listdb = DB::table('drugs')->get();
+
+        // Set obat as list
+        $drug_list=[];
+        foreach($drug_listdb as $drug){
+            $drug_list[$drug->id] = $drug->nama_obat;
+        }
+
+        // Set list obat
+        $drugs=array();
+        foreach($drug_details as $drug_detail){
+            // Id periksa
+            $id=$drug_detail->examination_id;
+            // // Init value
+            if(empty($drugs[$id])){
+                $drugs[$id] = $drug_list[$drug_detail->drug_id];
+                continue;
+            }
+            $array_before = $drugs[$id] .', '. $drug_list[$drug_detail->drug_id];
+            // // Tambah ke list
+            $drugs[$id] = $array_before;
+        }
+        // foreach($histories_pasien->get() as $history){
+        //     Object.defineProperty($histories_pasien, "obat", $drugs[$history->id]);
+        // }
+        // $histories_pasien->setCollection(collect($history_with_drugs));
+        // $histories_pasien = $histories_pasien->get();
+        $histories_pasien->transform(function($item, $key) use($drugs){
+            // dd($item);
+            $item->obat = $drugs[$item->id];
+            return $item;
+        });
         return response()->json($histories_pasien, 200);
     }
 }
