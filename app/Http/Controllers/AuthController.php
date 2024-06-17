@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\RegPolyclinic;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -51,13 +54,26 @@ class AuthController extends Controller
             'no_hp'     => 'required|max:15'
         ]);
 
+        // if user exist auto login
+        $user = Patient::query()->where('no_ktp', '=', $request->no_ktp);
+        if($user->count() != 0){
+            $data_user = $user->first();
+            Auth::guard('patient')->attempt([
+                'nama'      => $data_user->nama,
+                'alamat'    => $data_user->alamat,
+                'password'  =>  'password'
+            ]);
+            return redirect('/');
+        }
+
+
         // create prefix
         $date = new DateTime();
         $prefix = $date->format('Ym');
         $patient_count = Patient::count();
         $patient_last = DB::table('patients')
-        ->orderByDesc('no_rm')->first()->no_rm;
-        $patient_last_number = substr($patient_last,7);
+        ->orderByDesc('no_rm')->first();
+        $patient_last_number = $patient_last == null ? 0 : substr($patient_last->no_rm,7);;
         $count = $patient_count == 0 ? 1:$patient_last_number+1;
 
         $no_rm = $prefix.'-'.$count;
@@ -76,7 +92,7 @@ class AuthController extends Controller
             'password'  =>  'password'
         ];
         Auth::guard('patient')->attempt($data_login);
-        return redirect('patient_dashboard');
+        return redirect('/');
     }
 
     public function logout(Request $request){
@@ -85,5 +101,20 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('login');
+    }
+
+    public function index():View{
+        $registrations = RegPolyclinic::count();
+        $patients = Patient::count();
+        $doctors = Doctor::count();
+        $name = '';
+        if (Auth::guard('admin')->check()){
+            $name = Auth::guard('admin')->user()->nama;
+        } elseif (Auth::guard('doctor')->check()){
+            $name = Auth::guard('doctor')->user()->nama;
+        } else {
+            $name = Auth::guard('patient')->user()->nama;
+        }
+        return view('welcome', compact('registrations', 'name', 'patients', 'doctors'));
     }
 }

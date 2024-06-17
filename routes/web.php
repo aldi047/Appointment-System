@@ -24,9 +24,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 // View
-Route::get('/', function () {
-    return view('welcome', ['registration' => RegPolyclinic::count()]);
+// Route::get('/', function () {
+//     // return view('welcome', ['registration' => RegPolyclinic::count(),]);
+// });
+Route::get('/dashboard', function(){
+    return redirect('/');
 });
+Route::get('/', [AuthController::class, 'index']);
 Route::get('/register', function () {
     return view('register');
 });
@@ -47,9 +51,6 @@ Route::get('/login', function () {
 
 // https://laravel-news.com/passwordless-authentication-in-laravel
 // https://stackoverflow.com/questions/70181985/laravel-how-to-use-authattempt-without-password-replace-by-other-column
-// get history id dengan klik
-// Buat Dashboard lebih ramai                                           ====
-// Pasien register dengan nik sama langsung login						====
 // Buat halaman wellcome dan welcome ditambah url /dashboard		    ====
 // Testing dengan database kosong                                       ====
 // Buat login menjadi manual jadi tanpa password        				====
