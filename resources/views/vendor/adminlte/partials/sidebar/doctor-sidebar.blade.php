@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+    <a href="/dashboard" class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
         <p class="text-nowrap">
             Dashboard

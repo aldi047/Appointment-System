@@ -36,11 +36,11 @@ class AuthController extends Controller
         // }
 
         if (Auth::guard('admin')->attempt($data_login)){
-            return redirect('/');
+            return redirect('/dashboard');
         }elseif(Auth::guard('patient')->attempt($data_login)){
-            return redirect('/');
+            return redirect('/dashboard');
         }elseif(Auth::guard('doctor')->attempt($data_login)){
-            return redirect('/');
+            return redirect('/dashboard');
         }else{
             return back()->with('error','Nama atau Alamat salah');
         }
@@ -63,7 +63,7 @@ class AuthController extends Controller
                 'alamat'    => $data_user->alamat,
                 'password'  =>  'password'
             ]);
-            return redirect('/');
+            return redirect('/dashboard');
         }
 
 
@@ -92,7 +92,7 @@ class AuthController extends Controller
             'password'  =>  'password'
         ];
         Auth::guard('patient')->attempt($data_login);
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function logout(Request $request){
@@ -115,6 +115,6 @@ class AuthController extends Controller
         } else {
             $name = Auth::guard('patient')->user()->nama;
         }
-        return view('welcome', compact('registrations', 'name', 'patients', 'doctors'));
+        return view('dashboard', compact('registrations', 'name', 'patients', 'doctors'));
     }
 }
