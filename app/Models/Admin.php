@@ -17,7 +17,6 @@ class Admin extends Authenticable
     ];
 
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 }

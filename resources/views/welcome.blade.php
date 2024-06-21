@@ -11,7 +11,7 @@
             <h6>Bimbingan Karir 2024 Bidang Web</h6>
         </div>
     </div>
-    <div class="container-fluid ">
+    <div class="container-fluid">
         <div class="row p-4 justify-content-center">
             <div class="col-lg-5 col-md-4 col-sm3 p-3">
                 <a href="/register" class="btn btn-primary p-2 mb-2">
@@ -33,11 +33,11 @@
         </div>
     </div>
 
-    <div class="text-center mt-5">
+    <div class="container-fluid text-center my-5">
         <h1>Testimoni Pasien</h1>
         <h5>Para pasien yang setia</h5>
         <div class="row d-flex justify-content-center pt-4">
-            <div class="col-md-8 px-3">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body m-3">
                         <div class="row">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 px-3">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-body m-3">
                         <div class="row">

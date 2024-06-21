@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email');
             $table->string('alamat');
-            $table->string('password')->default(bcrypt('password'));
             $table->timestamps();
         });
     }
+    // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
     /**
      * Reverse the migrations.

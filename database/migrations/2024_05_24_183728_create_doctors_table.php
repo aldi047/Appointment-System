@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('nama', 50);
             $table->string('alamat', 50);
             $table->string('no_hp', 15);
-            $table->string('password')->default(bcrypt('password'));
             $table->timestamps();
         });
     }

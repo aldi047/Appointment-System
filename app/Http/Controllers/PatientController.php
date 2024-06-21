@@ -42,8 +42,8 @@ class PatientController extends Controller
         $no_rm = $prefix.'-'.$count;
 
         Patient::create([
-            'nama'      => strtolower($request->nama),
-            'alamat'    => strtolower($request->alamat),
+            'nama'      => $request->nama,
+            'alamat'    => $request->alamat,
             'no_ktp'    => $request->no_ktp,
             'no_hp'     => $request->no_hp,
             'no_rm'     => $no_rm

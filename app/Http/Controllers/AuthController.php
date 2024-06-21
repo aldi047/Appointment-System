@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\RegPolyclinic;
+use Illuminate\Contracts\Auth\UserProvider;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -21,25 +23,19 @@ class AuthController extends Controller
             'alamat'=>'required',
         ]);
         // dd('sampe sini');
-        $data_login = [
-            'nama'      => strtolower($request->nama),
-            'alamat'  => strtolower($request->alamat),
-            'password'  =>  'password'
+        $credentials = [
+            'nama'      => $request->nama,
+            'alamat'  => $request->alamat
         ];
-        // attemp ganti varible model user
-        // $user = Patient::query()->where('nama', '=', $data_login['nama'])
-        // ->where('alamat', '=', $data_login['alamat'])
-        // ->firstOrFail();
 
-        // if(Auth::guard('patient')->login($user)){
-        //     return redirect('/');
-        // }
-
-        if (Auth::guard('admin')->attempt($data_login)){
+        if ($id = $this->loginGuardAdmin($credentials)){
+            Auth::guard('admin')->loginUsingId($id);
             return redirect('/dashboard');
-        }elseif(Auth::guard('patient')->attempt($data_login)){
+        }elseif($id = $this->loginGuardDcotor($credentials)){
+            Auth::guard('doctor')->loginUsingId($id);
             return redirect('/dashboard');
-        }elseif(Auth::guard('doctor')->attempt($data_login)){
+        }elseif($id = $this->loginGuardPatient($credentials)){
+            Auth::guard('patient')->loginUsingId($id);
             return redirect('/dashboard');
         }else{
             return back()->with('error','Nama atau Alamat salah');
@@ -55,14 +51,9 @@ class AuthController extends Controller
         ]);
 
         // if user exist auto login
-        $user = Patient::query()->where('no_ktp', '=', $request->no_ktp);
-        if($user->count() != 0){
-            $data_user = $user->first();
-            Auth::guard('patient')->attempt([
-                'nama'      => $data_user->nama,
-                'alamat'    => $data_user->alamat,
-                'password'  =>  'password'
-            ]);
+        $user = Patient::query()->where('no_ktp', '=', $request->no_ktp)->first();
+        if($user){
+            Auth::guard('patient')->loginUsingId($user->id);
             return redirect('/dashboard');
         }
 
@@ -78,20 +69,15 @@ class AuthController extends Controller
 
         $no_rm = $prefix.'-'.$count;
 
-        Patient::create([
-            'nama'      => strtolower($request->nama),
-            'alamat'    => strtolower($request->alamat),
+        $new_user_id = Patient::create([
+            'nama'      => $request->nama,
+            'alamat'    => $request->alamat,
             'no_ktp'    => $request->no_ktp,
             'no_hp'     => $request->no_hp,
             'no_rm'     => $no_rm
-        ]);
+        ])->id;
+        Auth::guard('patient')->loginUsingId($new_user_id);
 
-        $data_login = [
-            'nama'      => strtolower($request->nama),
-            'alamat'  => strtolower($request->alamat),
-            'password'  =>  'password'
-        ];
-        Auth::guard('patient')->attempt($data_login);
         return redirect('/dashboard');
     }
 
@@ -116,5 +102,35 @@ class AuthController extends Controller
             $name = Auth::guard('patient')->user()->nama;
         }
         return view('dashboard', compact('registrations', 'name', 'patients', 'doctors'));
+    }
+
+    private function loginGuardAdmin($credentials){
+        $user = Admin::query()->where('nama', 'like', $credentials['nama'])
+        ->where('alamat', 'like', $credentials['alamat'])
+        ->first();
+        if(!$user){
+            return false;
+        }
+        return $user->id;
+    }
+
+    private function loginGuardDcotor($credentials){
+        $user = Doctor::query()->where('nama', 'like', $credentials['nama'])
+        ->where('alamat', 'like', $credentials['alamat'])
+        ->first();
+        if(!$user){
+            return false;
+        }
+        return $user->id;
+    }
+
+    private function loginGuardPatient($credentials){
+        $user = Patient::query()->where('nama', 'like', $credentials['nama'])
+        ->where('alamat', 'like', $credentials['alamat'])
+        ->first();
+        if(!$user){
+            return false;
+        }
+        return $user->id;
     }
 }
