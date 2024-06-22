@@ -76,6 +76,7 @@ class RegPolyclinicController extends Controller
         $datas = DB::table('doctors')
         ->join('examination_schedules', 'doctors.id', '=', 'examination_schedules.doctor_id')
         ->where('doctors.polyclinic_id', '=', $id)
+        ->where('status', '=', '1')
         ->get();
 
         $schedule = [];

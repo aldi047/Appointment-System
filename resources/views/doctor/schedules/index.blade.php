@@ -29,6 +29,7 @@
                                 <th>Hari</th>
                                 <th>Jam Mulai</th>
                                 <th>Jam Selesai</th>
+                                <th>Status</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -42,21 +43,19 @@
                                     <td class="align-middle">{{ $schedule->hari }}</td>
                                     <td class="align-middle">{{ $schedule->jam_mulai }}</td>
                                     <td class="align-middle">{{ $schedule->jam_selesai }}</td>
+                                    <td class="align-middle">
+                                        @if($schedule->status == 1)
+                                            Aktif
+                                        @else
+                                            Tidak Aktif
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group btn-block btn-sm">
                                             @if ($today != $schedule->hari)
                                                 <a class="btn btn-primary btn-sm"
                                                     href="{{ route('schedules.edit', $schedule->id) }}">Edit</a>
                                             @endif
-                                            {{-- <button type="button" class="btn btn-outline-danger btn-sm">Hapus</button> --}}
-                                            <form class="btn btn-danger btn-sm"
-                                                onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                action="{{ route('schedules.destroy', $schedule->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="bg-transparent border-0 text-white w-100"
-                                                    type="submit">Hapus</button>
-                                            </form>
                                         </div>
                                     </td>
                                 </tr>

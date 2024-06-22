@@ -57,6 +57,29 @@
                                     </div>
                                 @enderror
                             </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold">Status Jadwal</label>
+                                <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" value="1" id="radioAktif">
+                                <label class="form-check-label" for="radioAktif">
+                                    Aktif
+                                </label>
+                                </div>
+                                <div class="form-check">
+                                <input class="form-check-input" type="radio" name="status" value="0" id="radioTidakAktif" checked>
+                                <label class="form-check-label" for="radioTidakAktif">
+                                    Tidak Aktif
+                                </label>
+                                </div>
+
+                                <!-- error message untuk status -->
+                                @error('status')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-md btn-primary float-right mx-4">Tambah</button>
                         <button type="reset" class="btn btn-md btn-warning float-right">Reset</button>
