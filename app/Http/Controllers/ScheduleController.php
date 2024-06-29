@@ -48,9 +48,10 @@ class ScheduleController extends Controller
     public function store(Request $request):RedirectResponse{
         $id = Auth::guard('doctor')->user()->id;
         $request->validate([
-            'hari'          => "required|in:Senin,Selasa,Rabu,Kamis,Jumat",
+            'hari'          => "required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu",
             'jam_mulai'     => 'required',
             'jam_selesai'   => 'required',
+            'status'        => 'required'
         ]);
 
         // Can't add schedule at the same day
@@ -60,6 +61,7 @@ class ScheduleController extends Controller
                 'hari'          => $request->hari,
                 'jam_mulai'     => $request->jam_mulai,
                 'jam_selesai'   => $request->jam_selesai,
+                'status'        => $request->status,
             ];
             return Redirect::back()->with($back_data);
         }
@@ -71,16 +73,24 @@ class ScheduleController extends Controller
                 'hari'          => $request->hari,
                 'jam_mulai'     => $request->jam_mulai,
                 'jam_selesai'   => $request->jam_selesai,
+                'status'        => $request->status,
             ];
             return Redirect::back()->with($back_data);
         }
-
-        ExaminationSchedule::create([
+        
+        $data = [
             'doctor_id'     => $id,
             'hari'          => $request->hari,
             'jam_mulai'     => $request->jam_mulai,
             'jam_selesai'   => $request->jam_selesai,
-        ]);
+            'status'        => $request->status
+        ];
+        if($request->status == 1){
+            ExaminationSchedule::query()
+            ->where('doctor_id', '=', Auth::guard('doctor')->user()->id)
+            ->update(['status' => '0']);
+        }
+        ExaminationSchedule::create($data);
 
         return redirect()->route('schedules.index')->with('success', 'Jadwal Berhasail Ditambahkan!');
     }
@@ -95,9 +105,10 @@ class ScheduleController extends Controller
 
     public function update(Request $request, $id):RedirectResponse{
         $data = $request->validate([
-            'hari'          => "required|in:Senin,Selasa,Rabu,Kamis,Jumat",
-            'jam_mulai'     => 'required',
-            'jam_selesai'   => 'required',
+            // 'hari'          => "required|in:Senin,Selasa,Rabu,Kamis,Jumat",
+            // 'jam_mulai'     => 'required',
+            // 'jam_selesai'   => 'required',
+            'status'        => 'required'
         ]);
 
         // Can't add schedule at the same day
@@ -107,6 +118,7 @@ class ScheduleController extends Controller
                 'hari'          => $request->hari,
                 'jam_mulai'     => $request->jam_mulai,
                 'jam_selesai'   => $request->jam_selesai,
+                'status'        => $request->status
             ];
             return Redirect::back()->with($back_data);
         }
@@ -118,10 +130,16 @@ class ScheduleController extends Controller
                 'hari'          => $request->hari,
                 'jam_mulai'     => $request->jam_mulai,
                 'jam_selesai'   => $request->jam_selesai,
+                'status'        => $request->status
             ];
             return Redirect::back()->with($back_data);
         }
         $schedule = ExaminationSchedule::findOrFail($id);
+        if($request->status == 1){
+            ExaminationSchedule::query()
+            ->where('doctor_id', '=', Auth::guard('doctor')->user()->id)
+            ->update(['status' => '0']);
+        }
         $schedule->update($data);
         return redirect()->route('schedules.index')->with('success', 'Jadwal Berhasail Diedit!');;
     }
@@ -136,6 +154,7 @@ class ScheduleController extends Controller
         // Check Schedule
         $prev_schedule = DB::table('examination_schedules')
             ->where('hari', '=', $request->hari)
+            ->where('doctor_id', '=', Auth::guard('doctor')->user()->id)
             ->where(function($query) use ($request){
                 $query->orWhere(function($query) use ($request){
                     $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai]);

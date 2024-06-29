@@ -13,6 +13,7 @@ class ExaminationSchedule extends Model
         'doctor_id',
         'hari',
         'jam_mulai',
-        'jam_selesai'
+        'jam_selesai',
+        'status'
     ];
 }
