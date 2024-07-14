@@ -43,7 +43,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Poli</label>
+                                <label class="font-weight-bold">Obat</label>
                                 <select class="js-example-basic-multiple form-control" name="drug_id[]" multiple="multiple">
                                 </select>
                                 <!-- error message untuk drug_id -->

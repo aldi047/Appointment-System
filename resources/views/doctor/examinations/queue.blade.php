@@ -29,12 +29,12 @@
                                     <td class="text-center">
                                         @if ($examination->status_periksa == 0)
                                             <a class="btn btn-primary btn-sm"
-                                                href={{ route('examinations.create', ['id' => $examination->id]) }}>
+                                                href={{ route('examinations.create', ['id' => $examination->reg_id]) }}>
                                                 <i class="nav-icon fas fa-stethoscope"> Periksa</i>
                                             </a>
                                         @else
                                             <a class="btn btn-warning btn-sm"
-                                                href={{ route('examinations.edit', $examination->id) }}>
+                                                href={{ route('examinations.edit', $examination->reg_id) }}>
                                                 <i class="nav-icon fas fa-stethoscope text-grey"> Edit</i>
                                             </a>
                                         @endif

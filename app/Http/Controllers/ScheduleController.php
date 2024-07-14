@@ -77,7 +77,7 @@ class ScheduleController extends Controller
             ];
             return Redirect::back()->with($back_data);
         }
-        
+
         $data = [
             'doctor_id'     => $id,
             'hari'          => $request->hari,

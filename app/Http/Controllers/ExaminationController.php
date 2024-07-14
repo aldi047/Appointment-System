@@ -20,7 +20,10 @@ class ExaminationController extends Controller
         $page_items=6;
         $examination_datas = DB::table('patients')
         ->join('reg_polyclinics', 'patients.id', '=', 'reg_polyclinics.patient_id')
-        ->select('reg_polyclinics.no_antrian', 'patients.nama', 'reg_polyclinics.keluhan', 'reg_polyclinics.status_periksa', 'reg_polyclinics.id')
+        // ->select('reg_polyclinics.no_antrian', 'patients.nama', 'reg_polyclinics.keluhan', 'reg_polyclinics.status_periksa', 'reg_polyclinics.id')
+        ->selectRaw('no_antrian, nama, keluhan, status_periksa, reg_polyclinics.id AS reg_id, reg_polyclinics.id')
+        ->join('examination_schedules', 'reg_polyclinics.examination_schedule_id', '=', 'examination_schedules.id')
+        ->where('examination_schedules.doctor_id', '=', Auth::guard('doctor')->user()->id)
         ->orderByDesc('reg_polyclinics.created_at')
         ->paginate($page_items);
         return view('doctor.examinations.queue', compact('examination_datas'));
