@@ -89,7 +89,7 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-    public function index():View{
+    public function index(){
         $registrations = RegPolyclinic::count();
         $patients = Patient::count();
         $doctors = Doctor::count();
@@ -98,8 +98,10 @@ class AuthController extends Controller
             $name = Auth::guard('admin')->user()->nama;
         } elseif (Auth::guard('doctor')->check()){
             $name = Auth::guard('doctor')->user()->nama;
-        } else {
+        } elseif (Auth::guard('patient')->check()){
             $name = Auth::guard('patient')->user()->nama;
+        } else {
+            return redirect('/');
         }
         return view('dashboard', compact('registrations', 'name', 'patients', 'doctors'));
     }
